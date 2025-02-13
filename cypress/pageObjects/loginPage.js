@@ -8,9 +8,8 @@ class LoginPage {
     submit = 'button[type="submit"]'
 
     userLogin(userType) {
-        cy.fixture('loginData').then((data) => {
+        cy.fixture('config').then((data) => {
             const user = data[userType];           // Fetch login detsils from fixture file details 
-
             
             cy.visit("https://saura-emitra-uat.selcofoundation.org/digit-ui/employee/user/language-selection");
             cy.get(this.slectLanguage).click();
@@ -22,10 +21,17 @@ class LoginPage {
         });
     }
 
+
+    //LOGIN VALIDATION
     centreName = '.ulb'
-    
-    validate(){
+    validateHCR(){
         cy.get(this.centreName).should('be.visible').and('contain.text', 'TENANT_TENANTS_PG_DUMMY');
+    }
+    validateCRM(){
+        cy.get(this.centreName).should('be.visible').and('contain.text', 'ALL');
+    }
+    validateVENDER(){
+        cy.get(this.centreName).should('be.visible').and('contain.text', 'ALL');
     }
 }
 
