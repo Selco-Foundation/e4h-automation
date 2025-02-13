@@ -3,19 +3,28 @@ import LoginPage from '../pageObjects/loginPage';   // import path pageobject fi
 
 describe('Login Tests', () => {
   const login = new LoginPage(); 
-  it('should fail login with invalid credentials', () => {
-    cy.login('invalidUser');
-
-    // Validate error message
-    cy.get('.error-message').should('contain.text', 'Invalid login credentials');
+  it('Validate that HCR User should able to login', () => {
+    cy.login('HCRUserLogin');
+      // Validate successful login
+    cy.url().should('include', '/employee'); 
+    login.validateHCR()
+    
   });
 
-  it('should successfully login with valid credentials', () => {
-    cy.login('validUser');
+  it('Validate that CRM User should able to login', () => {
+    cy.login('CRMUserLogin');
 
     // Validate successful login
     cy.url().should('include', '/employee');  
-    login.validate()
+    login.validateCRM()
+  });
+
+  it('Validate that TECNICIAN User should able to login', () => {
+    cy.login('VenderLogin');
+
+    // Validate successful login
+    cy.url().should('include', '/employee');  
+    login.validateVENDER()
   });
 
 });
