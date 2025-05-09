@@ -173,7 +173,7 @@ async CRM_ticket_Rejection(Ticketnumber1)
     await this.finalrejectbutton.click();
     const rejectiontoast= this.rejectiontoastmessage;
     await expect(rejectiontoast).toBeVisible();
-    await this.page.screenshot({ path: 'Screenshot/rejected.png', fullPage: true });
+    await this.page.screenshot({ path: 'Screenshot/rejected.png'});
     
    }
 

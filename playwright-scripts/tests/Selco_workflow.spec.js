@@ -1,7 +1,7 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from "@playwright/test"
 const fs = require('fs');
 const path = require('path');
-const users = require('/home/bhcp0174/Downloads/Saura-eMitra_PLAYWRIGHT_AUTOMATION_FINAL/User.json');
+const users = require('/home/bhcp0174/Downloads/e4h-automation/playwright-scripts/User.json'); 
 import { LOGINPAGE } from "../PAGES/LOGINPAGE";
 
 import { HCR_FUNCTIONALITY } from "../PAGES/HCR_Module";
@@ -18,7 +18,7 @@ test("loginpagetest", async ({ page }) => {
   await page.goto("/digit-ui/employee/user/login");
   await loginpage.login(users.HCR.username, users.HCR.password, users.HCR.center);
   await loginpage.verifyURL("https://saura-emitra-uat.selcofoundation.org/digit-ui/employee");
-  await loginpage.isTextPresent("TENANT_TENANTS_PG_DUMMY");
+  await loginpage.isTextPresent();
 
   let Ticketnumber = await HCRpage.Ticket_Creation("Battery","Acid Leakage","Test Comment");
   await HCRpage.Success_Confirmation("Ticket Submitted");
@@ -38,8 +38,13 @@ test("loginpagetest", async ({ page }) => {
   await Vendorpage.Vendor_Login(users.vendor.username, users.vendor.password, users.vendor.center);
   await Vendorpage.Resolve_Ticket();
   await Vendorpage.Sendbackticket();
+  await Vendorpage.logout_Vendor("https://saura-emitra-uat.selcofoundation.org/digit-ui/employee/user/language-selection")
+
+  await loginpage.login(users.HCR.username, users.HCR.password, users.HCR.center) ;
+  await HCRpage.Reopen_Ticket("Only partial work was done", "Reopening the ticket");
+  
+  });
 
 
 
 
-});

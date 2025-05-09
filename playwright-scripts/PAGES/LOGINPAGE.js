@@ -19,7 +19,7 @@ async login(username, password, centerName) {
     await this.page.keyboard.type(centerName);
     await this.page.waitForTimeout(500);
     await this.page.getByText(centerName, { exact: true }).click();
-    await this.page.waitForTimeout(5000);
+    await this.page.waitForTimeout(2000);
     await this.loginbutton.click();
   }
 
@@ -28,7 +28,7 @@ async verifyURL(expectedURL)
     await expect(this.page).toHaveURL(expectedURL);
   }
 
-async isTextPresent(expectedText) 
+async isTextPresent() 
   {
     const locator = this.page.locator("//p[@class='ulb']");
     await expect(locator).toBeVisible();

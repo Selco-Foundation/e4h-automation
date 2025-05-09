@@ -27,7 +27,9 @@ this.sendbackbutton=page.locator("(//p[normalize-space()='SENDBACK'])[1]")
 this.senbackformheading= page.locator("(//h1[normalize-space()='Send Back'])[1]");
 this.sendbackreasondropdown=page.locator("(//input[@type='text'])[1]");
 this.finalsendbackbutton=page.locator("(//button[@class='selector-button-primary'])[1]")
-
+this.logoutbutton=page.locator("(//*[name()='svg'])[3]");
+this.logoutOption=page.locator("//span[contains(text(),'Logout')]")
+this.logoutconfirm= page.locator("//button[@class='selector-button-primary']")
 }
 
 async Vendor_Login(username2,password2,Healthcarecenter2)
@@ -90,4 +92,18 @@ const sendbacksuccesstoast= await this.successtoast;
 await expect(sendbacksuccesstoast).toBeVisible();
 await this.page.screenshot({ path: 'Screenshot/Sendbackticket.png' });
 }
+
+
+async logout_Vendor(ExpectedloginURL)
+     {
+         
+         await this.logoutbutton.click();
+         await this.logoutOption.click();
+         await this.page.waitForSelector("(//h1[normalize-space()='Logout'])[1]");
+         await this.logoutconfirm.click();
+         await expect(this.page).toHaveURL(ExpectedloginURL);
+         await this.ContinueBUtton.click(); 
+      }
+
+
 }
