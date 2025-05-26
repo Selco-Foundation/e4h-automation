@@ -83,7 +83,9 @@ async SearchticketCRM()
     await this.SearchBox.fill(Ticketsearch.trim());
     await this.searchButton.click();
     await this.page.waitForTimeout(2000); // Optional: wait for results
+
     //click on the apeared ticket and Assign the ticket
+    
     await this.searchedTicketresult.click();
     await expect(this.page.locator("(//header[normalize-space()='Ticket Summary'])[1]")).toBeVisible();
     await this.Takeactionbutton.click();
@@ -176,6 +178,33 @@ async CRM_ticket_Rejection(Ticketnumber1)
     await this.page.screenshot({ path: 'Screenshot/rejected.png'});
     
    }
+
+   async CRM_ticket_Assignment(Ticketnumber2,AssigneeName)
+   {
+          await this.gotohomebutton1.click();
+          await this.page.waitForTimeout(3000)
+          await this.InboxOption1.click();
+          const locator = this.page.locator("//header[normalize-space()='Inbox']");
+          await expect(locator).toBeVisible();    
+          await this.SearchBox.fill(Ticketnumber2);
+          await this.searchButton.click();
+          await this.page.waitForTimeout(2000); // Optional: wait for results
+          await this.ticketResult.waitFor();
+          // Verify that the ticket appears in the inbox
+          let ticketResultget= this.page.locator("td[role='cell'] div");
+          await expect(ticketResultget).toBeVisible();
+          await expect(ticketResultget).toContainText(Ticketnumber2);
+          await ticketResultget.click();
+          await this.Takeactionbutton.click();
+          await this.Assignbutton.click();
+          await this.assigndropdown.click();
+          await this.assigndropdown.fill(AssigneeName)
+          await this.page.getByText(AssigneeName, {exact:true}).click();
+          await this.commentbox1.fill("test comment");
+          await this.finalAssignButton.click();
+          const assignsucesstoast= this.successtoastmessage;
+          await expect(assignsucesstoast).toBeVisible();
+       }
 
    async logout_CRM(ExpectedloginURL)
    {

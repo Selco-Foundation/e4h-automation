@@ -16,6 +16,7 @@ test("loginpagetest", async ({ page }) => {
   const Vendorpage =new Vendor_Module(page);
 
   await page.goto("/digit-ui/employee/user/login");
+  await loginpage.Forgotpassword();
   await loginpage.login(users.HCR.username, users.HCR.password, users.HCR.center);
   await loginpage.verifyURL("https://saura-emitra-uat.selcofoundation.org/digit-ui/employee");
   await loginpage.isTextPresent();
@@ -33,6 +34,8 @@ test("loginpagetest", async ({ page }) => {
   await CRMpage.SearchticketCRM();
   let Ticketnumber1= await CRMpage.CRM_Ticket_Creation("Raichur","Raichur","Chandrabanda Primary Health Centre","Battery","Acid Leakage","test comment");
   await CRMpage.CRM_ticket_Rejection(Ticketnumber1);
+  let Ticketnumber2= await CRMpage.CRM_Ticket_Creation("Raichur","Raichur","Chandrabanda Primary Health Centre","Battery","Acid Leakage","test comment");
+  await CRMpage.CRM_ticket_Assignment(Ticketnumber2, "selcoindianew");
   await CRMpage.logout_CRM("https://saura-emitra-uat.selcofoundation.org/digit-ui/employee/user/language-selection");
   
   await Vendorpage.Vendor_Login(users.vendor.username, users.vendor.password, users.vendor.center);

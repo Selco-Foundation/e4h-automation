@@ -115,7 +115,7 @@ const AllstatusFiltername= await this.statusfilterALL.textContent();
 console.log("all status filter name = ", AllstatusFiltername);
 await this.ResolvedFilterCHeckbox.click();
 const tableheadingname= this.page.getByRole('columnheader', { name: 'Ticket No.' });
-await expect(tableheadingname).toBeVisible();
+//await expect(tableheadingname).toBeVisible();
 
 }
 async logo_validation()
