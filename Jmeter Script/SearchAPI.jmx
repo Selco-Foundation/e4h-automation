@@ -1,0 +1,1283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.6.3">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Test Plan">
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+        <collectionProp name="Arguments.arguments"/>
+      </elementProp>
+      <boolProp name="TestPlan.functional_mode">false</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
+    </TestPlan>
+    <hashTree>
+      <kg.apc.jmeter.threads.UltimateThreadGroup guiclass="kg.apc.jmeter.threads.UltimateThreadGroupGui" testclass="kg.apc.jmeter.threads.UltimateThreadGroup" testname="jp@gc - Ultimate Thread Group">
+        <collectionProp name="ultimatethreadgroupdata">
+          <collectionProp name="830155674">
+            <stringProp name="1567">10</stringProp>
+            <stringProp name="0">0</stringProp>
+            <stringProp name="53">5</stringProp>
+            <stringProp name="53">5</stringProp>
+            <stringProp name="10">10</stringProp>
+          </collectionProp>
+        </collectionProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller">
+          <intProp name="LoopController.loops">-1</intProp>
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+        </elementProp>
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+      </kg.apc.jmeter.threads.UltimateThreadGroup>
+      <hashTree>
+        <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="Inbox search"/>
+        <hashTree>
+          <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="JSR223 PreProcessor" enabled="false">
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="script">def filePath = &quot;/home/bhcp0174/Downloads/searchAPI.csv&quot;
+def lines = new File(filePath).readLines()
+// Skip the first line (header)
+def dataLines = lines.drop(1)
+// Pick a random line from the data (excluding header)
+def randomValue = dataLines[new Random().nextInt(dataLines.size())]
+vars.put(&quot;search_id&quot;, randomValue)</stringProp>
+          </JSR223PreProcessor>
+          <hashTree/>
+          <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV Data Set Config" enabled="false">
+            <stringProp name="filename">/home/bhcp0174/Downloads/searchAPI.csv</stringProp>
+            <stringProp name="fileEncoding"></stringProp>
+            <stringProp name="variableNames">search_id</stringProp>
+            <boolProp name="ignoreFirstLine">true</boolProp>
+            <stringProp name="delimiter">,</stringProp>
+            <boolProp name="quotedData">false</boolProp>
+            <boolProp name="recycle">true</boolProp>
+            <boolProp name="stopThread">false</boolProp>
+            <stringProp name="shareMode">shareMode.all</stringProp>
+          </CSVDataSet>
+          <hashTree/>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Auth token" enabled="false">
+            <stringProp name="TestPlan.comments">Created from cURL on 2025-05-20T17:15:15.578138</stringProp>
+            <stringProp name="HTTPSampler.domain">saura-emitra-uat.selcofoundation.org</stringProp>
+            <stringProp name="HTTPSampler.protocol">https</stringProp>
+            <stringProp name="HTTPSampler.path">/user/oauth/token?_=1747741503582</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">username=7346864311&amp;password=Health%402026&amp;userType=EMPLOYEE&amp;tenantId=pg&amp;scope=read&amp;grant_type=password</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP HeaderManager" enabled="true">
+              <collectionProp name="HeaderManager.headers">
+                <elementProp name="accept" elementType="Header">
+                  <stringProp name="Header.name">accept</stringProp>
+                  <stringProp name="Header.value">application/json, text/plain, */*</stringProp>
+                </elementProp>
+                <elementProp name="accept-language" elementType="Header">
+                  <stringProp name="Header.name">accept-language</stringProp>
+                  <stringProp name="Header.value">en-GB,en-US;q=0.9,en;q=0.8</stringProp>
+                </elementProp>
+                <elementProp name="authorization" elementType="Header">
+                  <stringProp name="Header.name">authorization</stringProp>
+                  <stringProp name="Header.value">Basic ZWdvdi11c2VyLWNsaWVudDo=</stringProp>
+                </elementProp>
+                <elementProp name="content-type" elementType="Header">
+                  <stringProp name="Header.name">content-type</stringProp>
+                  <stringProp name="Header.value">application/x-www-form-urlencoded</stringProp>
+                </elementProp>
+                <elementProp name="origin" elementType="Header">
+                  <stringProp name="Header.name">origin</stringProp>
+                  <stringProp name="Header.value">https://saura-emitra-uat.selcofoundation.org</stringProp>
+                </elementProp>
+                <elementProp name="priority" elementType="Header">
+                  <stringProp name="Header.name">priority</stringProp>
+                  <stringProp name="Header.value">u=1, i</stringProp>
+                </elementProp>
+                <elementProp name="referer" elementType="Header">
+                  <stringProp name="Header.name">referer</stringProp>
+                  <stringProp name="Header.value">https://saura-emitra-uat.selcofoundation.org/digit-ui/employee/user/login?from=%2Fdigit-ui%2Femployee</stringProp>
+                </elementProp>
+                <elementProp name="sec-ch-ua" elementType="Header">
+                  <stringProp name="Header.name">sec-ch-ua</stringProp>
+                  <stringProp name="Header.value">&quot;Chromium&quot;;v=&quot;134&quot;, &quot;Not:A-Brand&quot;;v=&quot;24&quot;, &quot;Google Chrome&quot;;v=&quot;134&quot;</stringProp>
+                </elementProp>
+                <elementProp name="sec-ch-ua-mobile" elementType="Header">
+                  <stringProp name="Header.name">sec-ch-ua-mobile</stringProp>
+                  <stringProp name="Header.value">?0</stringProp>
+                </elementProp>
+                <elementProp name="sec-ch-ua-platform" elementType="Header">
+                  <stringProp name="Header.name">sec-ch-ua-platform</stringProp>
+                  <stringProp name="Header.value">&quot;Linux&quot;</stringProp>
+                </elementProp>
+                <elementProp name="sec-fetch-dest" elementType="Header">
+                  <stringProp name="Header.name">sec-fetch-dest</stringProp>
+                  <stringProp name="Header.value">empty</stringProp>
+                </elementProp>
+                <elementProp name="sec-fetch-mode" elementType="Header">
+                  <stringProp name="Header.name">sec-fetch-mode</stringProp>
+                  <stringProp name="Header.value">cors</stringProp>
+                </elementProp>
+                <elementProp name="sec-fetch-site" elementType="Header">
+                  <stringProp name="Header.name">sec-fetch-site</stringProp>
+                  <stringProp name="Header.value">same-origin</stringProp>
+                </elementProp>
+                <elementProp name="user-agent" elementType="Header">
+                  <stringProp name="Header.name">user-agent</stringProp>
+                  <stringProp name="Header.value">Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36</stringProp>
+                </elementProp>
+              </collectionProp>
+              <stringProp name="TestPlan.comments">Created from cURL on 2025-05-20T17:15:15.578306</stringProp>
+            </HeaderManager>
+            <hashTree/>
+            <BoundaryExtractor guiclass="BoundaryExtractorGui" testclass="BoundaryExtractor" testname="Boundary Extractor" enabled="true">
+              <stringProp name="BoundaryExtractor.useHeaders">false</stringProp>
+              <stringProp name="BoundaryExtractor.refname">token</stringProp>
+              <stringProp name="BoundaryExtractor.lboundary">&quot;access_token&quot;:&quot;</stringProp>
+              <stringProp name="BoundaryExtractor.rboundary">&quot;,&quot;token_type</stringProp>
+              <stringProp name="BoundaryExtractor.default"></stringProp>
+              <boolProp name="BoundaryExtractor.default_empty_value">false</boolProp>
+              <stringProp name="BoundaryExtractor.match_number">1</stringProp>
+            </BoundaryExtractor>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="inbox search">
+            <stringProp name="TestPlan.comments">Created from cURL on 2025-05-20T13:20:59.97954</stringProp>
+            <stringProp name="HTTPSampler.domain">saura-emitra-uat.selcofoundation.org</stringProp>
+            <stringProp name="HTTPSampler.protocol">https</stringProp>
+            <stringProp name="HTTPSampler.path">/inbox/v2/_search?_=1747727446599</stringProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">{&quot;inbox&quot;:{&quot;tenantId&quot;:&quot;pg&quot;,&quot;processSearchCriteria&quot;:{&quot;businessService&quot;:[&quot;Incident&quot;],&quot;moduleName&quot;:&quot;Incident&quot;,&quot;tenantId&quot;:&quot;pg&quot;},&quot;moduleSearchCriteria&quot;:{&quot;tenantId&quot;:&quot;pg&quot;,&quot;sortOrder&quot;:&quot;DESC&quot;},&quot;limit&quot;:10,&quot;offset&quot;:0},&quot;RequestInfo&quot;:{&quot;apiId&quot;:&quot;Rainmaker&quot;,&quot;authToken&quot;:&quot;${token}&quot;,&quot;userInfo&quot;:{&quot;id&quot;:95,&quot;uuid&quot;:&quot;d2a12218-c71b-4aa3-b7e4-a811c522ef0c&quot;,&quot;userName&quot;:&quot;7346864311&quot;,&quot;name&quot;:&quot;CRM uat&quot;,&quot;mobileNumber&quot;:&quot;9901224633&quot;,&quot;emailId&quot;:&quot;crm@gmail.com&quot;,&quot;locale&quot;:&quot;en_IN&quot;,&quot;type&quot;:&quot;EMPLOYEE&quot;,&quot;roles&quot;:[{&quot;name&quot;:&quot;Complainant&quot;,&quot;code&quot;:&quot;COMPLAINANT&quot;,&quot;tenantId&quot;:&quot;pg&quot;},{&quot;name&quot;:&quot;Employee&quot;,&quot;code&quot;:&quot;EMPLOYEE&quot;,&quot;tenantId&quot;:&quot;pg&quot;},{&quot;name&quot;:&quot;Complaint Assessor&quot;,&quot;code&quot;:&quot;COMPLAINT_ASSESSOR&quot;,&quot;tenantId&quot;:&quot;pg&quot;},{&quot;name&quot;:&quot;Super User&quot;,&quot;code&quot;:&quot;SUPERUSER&quot;,&quot;tenantId&quot;:&quot;pg&quot;}],&quot;active&quot;:true,&quot;tenantId&quot;:&quot;pg&quot;,&quot;permanentCity&quot;:&quot;All&quot;},&quot;msgId&quot;:&quot;${search_id}&quot;,&quot;plainAccessRequest&quot;:{}}}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP HeaderManager" enabled="true">
+              <collectionProp name="HeaderManager.headers">
+                <elementProp name="accept" elementType="Header">
+                  <stringProp name="Header.name">accept</stringProp>
+                  <stringProp name="Header.value">application/json, text/plain, */*</stringProp>
+                </elementProp>
+                <elementProp name="accept-language" elementType="Header">
+                  <stringProp name="Header.name">accept-language</stringProp>
+                  <stringProp name="Header.value">en-GB,en-US;q=0.9,en;q=0.8</stringProp>
+                </elementProp>
+                <elementProp name="content-type" elementType="Header">
+                  <stringProp name="Header.name">content-type</stringProp>
+                  <stringProp name="Header.value">application/json;charset=UTF-8</stringProp>
+                </elementProp>
+                <elementProp name="origin" elementType="Header">
+                  <stringProp name="Header.name">origin</stringProp>
+                  <stringProp name="Header.value">https://saura-emitra-uat.selcofoundation.org</stringProp>
+                </elementProp>
+                <elementProp name="priority" elementType="Header">
+                  <stringProp name="Header.name">priority</stringProp>
+                  <stringProp name="Header.value">u=1, i</stringProp>
+                </elementProp>
+                <elementProp name="referer" elementType="Header">
+                  <stringProp name="Header.name">referer</stringProp>
+                  <stringProp name="Header.value">https://saura-emitra-uat.selcofoundation.org/digit-ui/employee/im/inbox</stringProp>
+                </elementProp>
+                <elementProp name="sec-ch-ua" elementType="Header">
+                  <stringProp name="Header.name">sec-ch-ua</stringProp>
+                  <stringProp name="Header.value">&quot;Chromium&quot;;v=&quot;134&quot;, &quot;Not:A-Brand&quot;;v=&quot;24&quot;, &quot;Google Chrome&quot;;v=&quot;134&quot;</stringProp>
+                </elementProp>
+                <elementProp name="sec-ch-ua-mobile" elementType="Header">
+                  <stringProp name="Header.name">sec-ch-ua-mobile</stringProp>
+                  <stringProp name="Header.value">?0</stringProp>
+                </elementProp>
+                <elementProp name="sec-ch-ua-platform" elementType="Header">
+                  <stringProp name="Header.name">sec-ch-ua-platform</stringProp>
+                  <stringProp name="Header.value">&quot;Linux&quot;</stringProp>
+                </elementProp>
+                <elementProp name="sec-fetch-dest" elementType="Header">
+                  <stringProp name="Header.name">sec-fetch-dest</stringProp>
+                  <stringProp name="Header.value">empty</stringProp>
+                </elementProp>
+                <elementProp name="sec-fetch-mode" elementType="Header">
+                  <stringProp name="Header.name">sec-fetch-mode</stringProp>
+                  <stringProp name="Header.value">cors</stringProp>
+                </elementProp>
+                <elementProp name="sec-fetch-site" elementType="Header">
+                  <stringProp name="Header.name">sec-fetch-site</stringProp>
+                  <stringProp name="Header.value">same-origin</stringProp>
+                </elementProp>
+                <elementProp name="user-agent" elementType="Header">
+                  <stringProp name="Header.name">user-agent</stringProp>
+                  <stringProp name="Header.value">Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36</stringProp>
+                </elementProp>
+              </collectionProp>
+              <stringProp name="TestPlan.comments">Created from cURL on 2025-05-20T13:20:59.979604</stringProp>
+            </HeaderManager>
+            <hashTree/>
+          </hashTree>
+        </hashTree>
+        <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="Process search"/>
+        <hashTree>
+          <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="JSR223 PreProcessor">
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="script">// Clean up CSV values (remove any surrounding quotes)
+vars.put(&quot;incident_Id&quot;, vars.get(&quot;incident_Id&quot;).replace(&apos;&quot;&apos;, &apos;&apos;).trim())
+vars.put(&quot;msgId&quot;, vars.get(&quot;msgId&quot;).replace(&apos;&quot;&apos;, &apos;&apos;).trim())
+</stringProp>
+          </JSR223PreProcessor>
+          <hashTree/>
+          <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV Data Set Config">
+            <stringProp name="filename">/home/bhcp0174/Downloads/Ticketnumber.csv</stringProp>
+            <stringProp name="fileEncoding"></stringProp>
+            <stringProp name="variableNames">incident_Id,msgId  </stringProp>
+            <boolProp name="ignoreFirstLine">true</boolProp>
+            <stringProp name="delimiter">,</stringProp>
+            <boolProp name="quotedData">false</boolProp>
+            <boolProp name="recycle">true</boolProp>
+            <boolProp name="stopThread">false</boolProp>
+            <stringProp name="shareMode">shareMode.all</stringProp>
+          </CSVDataSet>
+          <hashTree/>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Auth token">
+            <stringProp name="TestPlan.comments">Created from cURL on 2025-05-20T17:15:15.578138</stringProp>
+            <stringProp name="HTTPSampler.domain">saura-emitra-uat.selcofoundation.org</stringProp>
+            <stringProp name="HTTPSampler.protocol">https</stringProp>
+            <stringProp name="HTTPSampler.path">/user/oauth/token?_=1747741503582</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">username=7346864311&amp;password=Health%402026&amp;userType=EMPLOYEE&amp;tenantId=pg&amp;scope=read&amp;grant_type=password</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP HeaderManager" enabled="true">
+              <collectionProp name="HeaderManager.headers">
+                <elementProp name="accept" elementType="Header">
+                  <stringProp name="Header.name">accept</stringProp>
+                  <stringProp name="Header.value">application/json, text/plain, */*</stringProp>
+                </elementProp>
+                <elementProp name="accept-language" elementType="Header">
+                  <stringProp name="Header.name">accept-language</stringProp>
+                  <stringProp name="Header.value">en-GB,en-US;q=0.9,en;q=0.8</stringProp>
+                </elementProp>
+                <elementProp name="authorization" elementType="Header">
+                  <stringProp name="Header.name">authorization</stringProp>
+                  <stringProp name="Header.value">Basic ZWdvdi11c2VyLWNsaWVudDo=</stringProp>
+                </elementProp>
+                <elementProp name="content-type" elementType="Header">
+                  <stringProp name="Header.name">content-type</stringProp>
+                  <stringProp name="Header.value">application/x-www-form-urlencoded</stringProp>
+                </elementProp>
+                <elementProp name="origin" elementType="Header">
+                  <stringProp name="Header.name">origin</stringProp>
+                  <stringProp name="Header.value">https://saura-emitra-uat.selcofoundation.org</stringProp>
+                </elementProp>
+                <elementProp name="priority" elementType="Header">
+                  <stringProp name="Header.name">priority</stringProp>
+                  <stringProp name="Header.value">u=1, i</stringProp>
+                </elementProp>
+                <elementProp name="referer" elementType="Header">
+                  <stringProp name="Header.name">referer</stringProp>
+                  <stringProp name="Header.value">https://saura-emitra-uat.selcofoundation.org/digit-ui/employee/user/login?from=%2Fdigit-ui%2Femployee</stringProp>
+                </elementProp>
+                <elementProp name="sec-ch-ua" elementType="Header">
+                  <stringProp name="Header.name">sec-ch-ua</stringProp>
+                  <stringProp name="Header.value">&quot;Chromium&quot;;v=&quot;134&quot;, &quot;Not:A-Brand&quot;;v=&quot;24&quot;, &quot;Google Chrome&quot;;v=&quot;134&quot;</stringProp>
+                </elementProp>
+                <elementProp name="sec-ch-ua-mobile" elementType="Header">
+                  <stringProp name="Header.name">sec-ch-ua-mobile</stringProp>
+                  <stringProp name="Header.value">?0</stringProp>
+                </elementProp>
+                <elementProp name="sec-ch-ua-platform" elementType="Header">
+                  <stringProp name="Header.name">sec-ch-ua-platform</stringProp>
+                  <stringProp name="Header.value">&quot;Linux&quot;</stringProp>
+                </elementProp>
+                <elementProp name="sec-fetch-dest" elementType="Header">
+                  <stringProp name="Header.name">sec-fetch-dest</stringProp>
+                  <stringProp name="Header.value">empty</stringProp>
+                </elementProp>
+                <elementProp name="sec-fetch-mode" elementType="Header">
+                  <stringProp name="Header.name">sec-fetch-mode</stringProp>
+                  <stringProp name="Header.value">cors</stringProp>
+                </elementProp>
+                <elementProp name="sec-fetch-site" elementType="Header">
+                  <stringProp name="Header.name">sec-fetch-site</stringProp>
+                  <stringProp name="Header.value">same-origin</stringProp>
+                </elementProp>
+                <elementProp name="user-agent" elementType="Header">
+                  <stringProp name="Header.name">user-agent</stringProp>
+                  <stringProp name="Header.value">Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36</stringProp>
+                </elementProp>
+              </collectionProp>
+              <stringProp name="TestPlan.comments">Created from cURL on 2025-05-20T17:15:15.578306</stringProp>
+            </HeaderManager>
+            <hashTree/>
+            <BoundaryExtractor guiclass="BoundaryExtractorGui" testclass="BoundaryExtractor" testname="Boundary Extractor" enabled="true">
+              <stringProp name="BoundaryExtractor.useHeaders">false</stringProp>
+              <stringProp name="BoundaryExtractor.refname">token</stringProp>
+              <stringProp name="BoundaryExtractor.lboundary">&quot;access_token&quot;:&quot;</stringProp>
+              <stringProp name="BoundaryExtractor.rboundary">&quot;,&quot;token_type</stringProp>
+              <stringProp name="BoundaryExtractor.default"></stringProp>
+              <boolProp name="BoundaryExtractor.default_empty_value">false</boolProp>
+              <stringProp name="BoundaryExtractor.match_number">1</stringProp>
+            </BoundaryExtractor>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Process search">
+            <stringProp name="TestPlan.comments">Created from cURL on 2025-05-20T14:33:58.061516</stringProp>
+            <stringProp name="HTTPSampler.domain">saura-emitra-uat.selcofoundation.org</stringProp>
+            <stringProp name="HTTPSampler.protocol">https</stringProp>
+            <stringProp name="HTTPSampler.path">/egov-workflow-v2/egov-wf/process/_search?tenantId=pg.dummy&amp;isStateLevelCall=false&amp;businessIds=${incident_Id}&amp;history=true&amp;_=${msgId}</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">{&quot;RequestInfo&quot;:{&quot;apiId&quot;:&quot;Rainmaker&quot;,&quot;authToken&quot;:&quot;${token}&quot;,&quot;businessIds&quot;:&quot;${incident_Id}&quot;,&quot;msgId&quot;:&quot;${msgId}&quot;,&quot;plainAccessRequest&quot;:{}}}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP HeaderManager" enabled="true">
+              <collectionProp name="HeaderManager.headers">
+                <elementProp name="accept" elementType="Header">
+                  <stringProp name="Header.name">accept</stringProp>
+                  <stringProp name="Header.value">application/json, text/plain, */*</stringProp>
+                </elementProp>
+                <elementProp name="accept-language" elementType="Header">
+                  <stringProp name="Header.name">accept-language</stringProp>
+                  <stringProp name="Header.value">en-GB,en-US;q=0.9,en;q=0.8</stringProp>
+                </elementProp>
+                <elementProp name="content-type" elementType="Header">
+                  <stringProp name="Header.name">content-type</stringProp>
+                  <stringProp name="Header.value">application/json;charset=UTF-8</stringProp>
+                </elementProp>
+                <elementProp name="origin" elementType="Header">
+                  <stringProp name="Header.name">origin</stringProp>
+                  <stringProp name="Header.value">https://saura-emitra-uat.selcofoundation.org</stringProp>
+                </elementProp>
+                <elementProp name="priority" elementType="Header">
+                  <stringProp name="Header.name">priority</stringProp>
+                  <stringProp name="Header.value">u=1, i</stringProp>
+                </elementProp>
+                <elementProp name="referer" elementType="Header">
+                  <stringProp name="Header.name">referer</stringProp>
+                  <stringProp name="Header.value">https://saura-emitra-uat.selcofoundation.org/digit-ui/employee/im/complaint/details/KA-RCH-123-1071/pg.dummy</stringProp>
+                </elementProp>
+                <elementProp name="sec-ch-ua" elementType="Header">
+                  <stringProp name="Header.name">sec-ch-ua</stringProp>
+                  <stringProp name="Header.value">&quot;Chromium&quot;;v=&quot;134&quot;, &quot;Not:A-Brand&quot;;v=&quot;24&quot;, &quot;Google Chrome&quot;;v=&quot;134&quot;</stringProp>
+                </elementProp>
+                <elementProp name="sec-ch-ua-mobile" elementType="Header">
+                  <stringProp name="Header.name">sec-ch-ua-mobile</stringProp>
+                  <stringProp name="Header.value">?0</stringProp>
+                </elementProp>
+                <elementProp name="sec-ch-ua-platform" elementType="Header">
+                  <stringProp name="Header.name">sec-ch-ua-platform</stringProp>
+                  <stringProp name="Header.value">&quot;Linux&quot;</stringProp>
+                </elementProp>
+                <elementProp name="sec-fetch-dest" elementType="Header">
+                  <stringProp name="Header.name">sec-fetch-dest</stringProp>
+                  <stringProp name="Header.value">empty</stringProp>
+                </elementProp>
+                <elementProp name="sec-fetch-mode" elementType="Header">
+                  <stringProp name="Header.name">sec-fetch-mode</stringProp>
+                  <stringProp name="Header.value">cors</stringProp>
+                </elementProp>
+                <elementProp name="sec-fetch-site" elementType="Header">
+                  <stringProp name="Header.name">sec-fetch-site</stringProp>
+                  <stringProp name="Header.value">same-origin</stringProp>
+                </elementProp>
+                <elementProp name="user-agent" elementType="Header">
+                  <stringProp name="Header.name">user-agent</stringProp>
+                  <stringProp name="Header.value">Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36</stringProp>
+                </elementProp>
+              </collectionProp>
+              <stringProp name="TestPlan.comments">Created from cURL on 2025-05-20T14:33:58.0616</stringProp>
+            </HeaderManager>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="HTTP Request" enabled="false">
+            <stringProp name="TestPlan.comments">Created from cURL on 2025-05-26T14:43:18.896077</stringProp>
+            <stringProp name="HTTPSampler.domain">saura-emitra-uat.selcofoundation.org</stringProp>
+            <stringProp name="HTTPSampler.protocol">https</stringProp>
+            <stringProp name="HTTPSampler.path">/egov-workflow-v2/egov-wf/process/_search?tenantId=pg.dummy&amp;isStateLevelCall=false&amp;businessIds=KA-RCH-123-1066&amp;history=true&amp;_=1748248168182</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">{&quot;RequestInfo&quot;:{&quot;apiId&quot;:&quot;Rainmaker&quot;,&quot;authToken&quot;:&quot;${token}&quot;,&quot;msgId&quot;:&quot;1748248168182|en_IN&quot;,&quot;plainAccessRequest&quot;:{}}}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP HeaderManager" enabled="true">
+              <collectionProp name="HeaderManager.headers">
+                <elementProp name="accept" elementType="Header">
+                  <stringProp name="Header.name">accept</stringProp>
+                  <stringProp name="Header.value">application/json, text/plain, */*</stringProp>
+                </elementProp>
+                <elementProp name="accept-language" elementType="Header">
+                  <stringProp name="Header.name">accept-language</stringProp>
+                  <stringProp name="Header.value">en-GB,en-US;q=0.9,en;q=0.8</stringProp>
+                </elementProp>
+                <elementProp name="content-type" elementType="Header">
+                  <stringProp name="Header.name">content-type</stringProp>
+                  <stringProp name="Header.value">application/json;charset=UTF-8</stringProp>
+                </elementProp>
+                <elementProp name="origin" elementType="Header">
+                  <stringProp name="Header.name">origin</stringProp>
+                  <stringProp name="Header.value">https://saura-emitra-uat.selcofoundation.org</stringProp>
+                </elementProp>
+                <elementProp name="priority" elementType="Header">
+                  <stringProp name="Header.name">priority</stringProp>
+                  <stringProp name="Header.value">u=1, i</stringProp>
+                </elementProp>
+                <elementProp name="referer" elementType="Header">
+                  <stringProp name="Header.name">referer</stringProp>
+                  <stringProp name="Header.value">https://saura-emitra-uat.selcofoundation.org/digit-ui/employee/im/complaint/details/KA-RCH-123-1066/pg.dummy</stringProp>
+                </elementProp>
+                <elementProp name="sec-ch-ua" elementType="Header">
+                  <stringProp name="Header.name">sec-ch-ua</stringProp>
+                  <stringProp name="Header.value">&quot;Chromium&quot;;v=&quot;134&quot;, &quot;Not:A-Brand&quot;;v=&quot;24&quot;, &quot;Google Chrome&quot;;v=&quot;134&quot;</stringProp>
+                </elementProp>
+                <elementProp name="sec-ch-ua-mobile" elementType="Header">
+                  <stringProp name="Header.name">sec-ch-ua-mobile</stringProp>
+                  <stringProp name="Header.value">?0</stringProp>
+                </elementProp>
+                <elementProp name="sec-ch-ua-platform" elementType="Header">
+                  <stringProp name="Header.name">sec-ch-ua-platform</stringProp>
+                  <stringProp name="Header.value">&quot;Linux&quot;</stringProp>
+                </elementProp>
+                <elementProp name="sec-fetch-dest" elementType="Header">
+                  <stringProp name="Header.name">sec-fetch-dest</stringProp>
+                  <stringProp name="Header.value">empty</stringProp>
+                </elementProp>
+                <elementProp name="sec-fetch-mode" elementType="Header">
+                  <stringProp name="Header.name">sec-fetch-mode</stringProp>
+                  <stringProp name="Header.value">cors</stringProp>
+                </elementProp>
+                <elementProp name="sec-fetch-site" elementType="Header">
+                  <stringProp name="Header.name">sec-fetch-site</stringProp>
+                  <stringProp name="Header.value">same-origin</stringProp>
+                </elementProp>
+                <elementProp name="user-agent" elementType="Header">
+                  <stringProp name="Header.name">user-agent</stringProp>
+                  <stringProp name="Header.value">Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36</stringProp>
+                </elementProp>
+              </collectionProp>
+              <stringProp name="TestPlan.comments">Created from cURL on 2025-05-26T14:43:18.896133</stringProp>
+            </HeaderManager>
+            <hashTree/>
+          </hashTree>
+        </hashTree>
+        <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="Im service search"/>
+        <hashTree>
+          <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="JSR223 PreProcessor">
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="script">// Clean up CSV values (remove any surrounding quotes)
+vars.put(&quot;incident_Id&quot;, vars.get(&quot;incident_Id&quot;).replace(&apos;&quot;&apos;, &apos;&apos;).trim())
+vars.put(&quot;msgId&quot;, vars.get(&quot;msgId&quot;).replace(&apos;&quot;&apos;, &apos;&apos;).trim())
+</stringProp>
+          </JSR223PreProcessor>
+          <hashTree/>
+          <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV Data Set Config">
+            <stringProp name="filename">/home/bhcp0174/Downloads/Ticketnumber.csv</stringProp>
+            <stringProp name="fileEncoding"></stringProp>
+            <stringProp name="variableNames">incident_Id,msgId  </stringProp>
+            <boolProp name="ignoreFirstLine">true</boolProp>
+            <stringProp name="delimiter">,</stringProp>
+            <boolProp name="quotedData">false</boolProp>
+            <boolProp name="recycle">true</boolProp>
+            <boolProp name="stopThread">false</boolProp>
+            <stringProp name="shareMode">shareMode.all</stringProp>
+          </CSVDataSet>
+          <hashTree/>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Auth token">
+            <stringProp name="TestPlan.comments">Created from cURL on 2025-05-20T17:15:15.578138</stringProp>
+            <stringProp name="HTTPSampler.domain">saura-emitra-uat.selcofoundation.org</stringProp>
+            <stringProp name="HTTPSampler.protocol">https</stringProp>
+            <stringProp name="HTTPSampler.path">/user/oauth/token?_=1747741503582</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">username=7346864311&amp;password=Health%402026&amp;userType=EMPLOYEE&amp;tenantId=pg&amp;scope=read&amp;grant_type=password</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP HeaderManager" enabled="true">
+              <collectionProp name="HeaderManager.headers">
+                <elementProp name="accept" elementType="Header">
+                  <stringProp name="Header.name">accept</stringProp>
+                  <stringProp name="Header.value">application/json, text/plain, */*</stringProp>
+                </elementProp>
+                <elementProp name="accept-language" elementType="Header">
+                  <stringProp name="Header.name">accept-language</stringProp>
+                  <stringProp name="Header.value">en-GB,en-US;q=0.9,en;q=0.8</stringProp>
+                </elementProp>
+                <elementProp name="authorization" elementType="Header">
+                  <stringProp name="Header.name">authorization</stringProp>
+                  <stringProp name="Header.value">Basic ZWdvdi11c2VyLWNsaWVudDo=</stringProp>
+                </elementProp>
+                <elementProp name="content-type" elementType="Header">
+                  <stringProp name="Header.name">content-type</stringProp>
+                  <stringProp name="Header.value">application/x-www-form-urlencoded</stringProp>
+                </elementProp>
+                <elementProp name="origin" elementType="Header">
+                  <stringProp name="Header.name">origin</stringProp>
+                  <stringProp name="Header.value">https://saura-emitra-uat.selcofoundation.org</stringProp>
+                </elementProp>
+                <elementProp name="priority" elementType="Header">
+                  <stringProp name="Header.name">priority</stringProp>
+                  <stringProp name="Header.value">u=1, i</stringProp>
+                </elementProp>
+                <elementProp name="referer" elementType="Header">
+                  <stringProp name="Header.name">referer</stringProp>
+                  <stringProp name="Header.value">https://saura-emitra-uat.selcofoundation.org/digit-ui/employee/user/login?from=%2Fdigit-ui%2Femployee</stringProp>
+                </elementProp>
+                <elementProp name="sec-ch-ua" elementType="Header">
+                  <stringProp name="Header.name">sec-ch-ua</stringProp>
+                  <stringProp name="Header.value">&quot;Chromium&quot;;v=&quot;134&quot;, &quot;Not:A-Brand&quot;;v=&quot;24&quot;, &quot;Google Chrome&quot;;v=&quot;134&quot;</stringProp>
+                </elementProp>
+                <elementProp name="sec-ch-ua-mobile" elementType="Header">
+                  <stringProp name="Header.name">sec-ch-ua-mobile</stringProp>
+                  <stringProp name="Header.value">?0</stringProp>
+                </elementProp>
+                <elementProp name="sec-ch-ua-platform" elementType="Header">
+                  <stringProp name="Header.name">sec-ch-ua-platform</stringProp>
+                  <stringProp name="Header.value">&quot;Linux&quot;</stringProp>
+                </elementProp>
+                <elementProp name="sec-fetch-dest" elementType="Header">
+                  <stringProp name="Header.name">sec-fetch-dest</stringProp>
+                  <stringProp name="Header.value">empty</stringProp>
+                </elementProp>
+                <elementProp name="sec-fetch-mode" elementType="Header">
+                  <stringProp name="Header.name">sec-fetch-mode</stringProp>
+                  <stringProp name="Header.value">cors</stringProp>
+                </elementProp>
+                <elementProp name="sec-fetch-site" elementType="Header">
+                  <stringProp name="Header.name">sec-fetch-site</stringProp>
+                  <stringProp name="Header.value">same-origin</stringProp>
+                </elementProp>
+                <elementProp name="user-agent" elementType="Header">
+                  <stringProp name="Header.name">user-agent</stringProp>
+                  <stringProp name="Header.value">Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36</stringProp>
+                </elementProp>
+              </collectionProp>
+              <stringProp name="TestPlan.comments">Created from cURL on 2025-05-20T17:15:15.578306</stringProp>
+            </HeaderManager>
+            <hashTree/>
+            <BoundaryExtractor guiclass="BoundaryExtractorGui" testclass="BoundaryExtractor" testname="Boundary Extractor" enabled="true">
+              <stringProp name="BoundaryExtractor.useHeaders">false</stringProp>
+              <stringProp name="BoundaryExtractor.refname">token</stringProp>
+              <stringProp name="BoundaryExtractor.lboundary">&quot;access_token&quot;:&quot;</stringProp>
+              <stringProp name="BoundaryExtractor.rboundary">&quot;,&quot;token_type</stringProp>
+              <stringProp name="BoundaryExtractor.default"></stringProp>
+              <boolProp name="BoundaryExtractor.default_empty_value">false</boolProp>
+              <stringProp name="BoundaryExtractor.match_number">1</stringProp>
+            </BoundaryExtractor>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="im service">
+            <stringProp name="TestPlan.comments">Created from cURL on 2025-05-23T11:26:04.050913</stringProp>
+            <stringProp name="HTTPSampler.domain">saura-emitra-uat.selcofoundation.org</stringProp>
+            <stringProp name="HTTPSampler.protocol">https</stringProp>
+            <stringProp name="HTTPSampler.path">/im-services/v2/request/_search?tenantId=pg.dummy&amp;incidentId=${incident_Id}&amp;_=${msgId}</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">{&quot;RequestInfo&quot;:{&quot;apiId&quot;:&quot;Rainmaker&quot;,&quot;authToken&quot;:&quot;${token}&quot;,&quot;userInfo&quot;:{&quot;id&quot;:93,&quot;uuid&quot;:&quot;8705261d-d383-4b34-ad8e-1cc5ac078c9d&quot;,&quot;userName&quot;:&quot;7346864312&quot;,&quot;name&quot;:&quot;Raju&quot;,&quot;mobileNumber&quot;:&quot;9886443508&quot;,&quot;emailId&quot;:&quot;dmnaik14@gmail.com&quot;,&quot;locale&quot;:&quot;en_IN&quot;,&quot;type&quot;:&quot;EMPLOYEE&quot;,&quot;roles&quot;:[{&quot;name&quot;:&quot;Complainant&quot;,&quot;code&quot;:&quot;COMPLAINANT&quot;,&quot;tenantId&quot;:&quot;pg.dummy&quot;},{&quot;name&quot;:&quot;Employee&quot;,&quot;code&quot;:&quot;EMPLOYEE&quot;,&quot;tenantId&quot;:&quot;pg.dummy&quot;}],&quot;active&quot;:true,&quot;tenantId&quot;:&quot;pg.dummy&quot;,&quot;permanentCity&quot;:&quot;Dummy Primary Health Centre&quot;},&quot;incidentId&quot;:&quot;${incident_Id}&quot;,&quot;msgId&quot;:&quot;${msgId}&quot;,&quot;plainAccessRequest&quot;:{}}}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP HeaderManager" enabled="true">
+              <collectionProp name="HeaderManager.headers">
+                <elementProp name="accept" elementType="Header">
+                  <stringProp name="Header.name">accept</stringProp>
+                  <stringProp name="Header.value">application/json, text/plain, */*</stringProp>
+                </elementProp>
+                <elementProp name="accept-language" elementType="Header">
+                  <stringProp name="Header.name">accept-language</stringProp>
+                  <stringProp name="Header.value">en-GB,en-US;q=0.9,en;q=0.8</stringProp>
+                </elementProp>
+                <elementProp name="content-type" elementType="Header">
+                  <stringProp name="Header.name">content-type</stringProp>
+                  <stringProp name="Header.value">application/json;charset=UTF-8</stringProp>
+                </elementProp>
+                <elementProp name="origin" elementType="Header">
+                  <stringProp name="Header.name">origin</stringProp>
+                  <stringProp name="Header.value">https://saura-emitra-uat.selcofoundation.org</stringProp>
+                </elementProp>
+                <elementProp name="priority" elementType="Header">
+                  <stringProp name="Header.name">priority</stringProp>
+                  <stringProp name="Header.value">u=1, i</stringProp>
+                </elementProp>
+                <elementProp name="referer" elementType="Header">
+                  <stringProp name="Header.name">referer</stringProp>
+                  <stringProp name="Header.value">https://saura-emitra-uat.selcofoundation.org/digit-ui/employee/im/complaint/details/KA-RCH-123-1075/pg.dummy</stringProp>
+                </elementProp>
+                <elementProp name="sec-ch-ua" elementType="Header">
+                  <stringProp name="Header.name">sec-ch-ua</stringProp>
+                  <stringProp name="Header.value">&quot;Chromium&quot;;v=&quot;134&quot;, &quot;Not:A-Brand&quot;;v=&quot;24&quot;, &quot;Google Chrome&quot;;v=&quot;134&quot;</stringProp>
+                </elementProp>
+                <elementProp name="sec-ch-ua-mobile" elementType="Header">
+                  <stringProp name="Header.name">sec-ch-ua-mobile</stringProp>
+                  <stringProp name="Header.value">?0</stringProp>
+                </elementProp>
+                <elementProp name="sec-ch-ua-platform" elementType="Header">
+                  <stringProp name="Header.name">sec-ch-ua-platform</stringProp>
+                  <stringProp name="Header.value">&quot;Linux&quot;</stringProp>
+                </elementProp>
+                <elementProp name="sec-fetch-dest" elementType="Header">
+                  <stringProp name="Header.name">sec-fetch-dest</stringProp>
+                  <stringProp name="Header.value">empty</stringProp>
+                </elementProp>
+                <elementProp name="sec-fetch-mode" elementType="Header">
+                  <stringProp name="Header.name">sec-fetch-mode</stringProp>
+                  <stringProp name="Header.value">cors</stringProp>
+                </elementProp>
+                <elementProp name="sec-fetch-site" elementType="Header">
+                  <stringProp name="Header.name">sec-fetch-site</stringProp>
+                  <stringProp name="Header.value">same-origin</stringProp>
+                </elementProp>
+                <elementProp name="user-agent" elementType="Header">
+                  <stringProp name="Header.name">user-agent</stringProp>
+                  <stringProp name="Header.value">Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36</stringProp>
+                </elementProp>
+              </collectionProp>
+              <stringProp name="TestPlan.comments">Created from cURL on 2025-05-23T11:26:04.050976</stringProp>
+            </HeaderManager>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="HTTP Request" enabled="false">
+            <stringProp name="TestPlan.comments">Created from cURL on 2025-05-26T12:56:41.036195</stringProp>
+            <stringProp name="HTTPSampler.domain">saura-emitra-uat.selcofoundation.org</stringProp>
+            <stringProp name="HTTPSampler.protocol">https</stringProp>
+            <stringProp name="HTTPSampler.path">/im-services/v2/request/_search?tenantId=pg.dummy&amp;incidentId=KA-RCH-123-1083&amp;_=1748244381184</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">{&quot;RequestInfo&quot;:{&quot;apiId&quot;:&quot;Rainmaker&quot;,&quot;authToken&quot;:&quot;${token}&quot;,&quot;userInfo&quot;:{&quot;id&quot;:95,&quot;uuid&quot;:&quot;d2a12218-c71b-4aa3-b7e4-a811c522ef0c&quot;,&quot;userName&quot;:&quot;7346864311&quot;,&quot;name&quot;:&quot;CRM uat&quot;,&quot;mobileNumber&quot;:&quot;9901224633&quot;,&quot;emailId&quot;:&quot;crm@gmail.com&quot;,&quot;locale&quot;:&quot;en_IN&quot;,&quot;type&quot;:&quot;EMPLOYEE&quot;,&quot;roles&quot;:[{&quot;name&quot;:&quot;Complainant&quot;,&quot;code&quot;:&quot;COMPLAINANT&quot;,&quot;tenantId&quot;:&quot;pg&quot;},{&quot;name&quot;:&quot;Employee&quot;,&quot;code&quot;:&quot;EMPLOYEE&quot;,&quot;tenantId&quot;:&quot;pg&quot;},{&quot;name&quot;:&quot;Super User&quot;,&quot;code&quot;:&quot;SUPERUSER&quot;,&quot;tenantId&quot;:&quot;pg&quot;},{&quot;name&quot;:&quot;Complaint Assessor&quot;,&quot;code&quot;:&quot;COMPLAINT_ASSESSOR&quot;,&quot;tenantId&quot;:&quot;pg&quot;}],&quot;active&quot;:true,&quot;tenantId&quot;:&quot;pg&quot;,&quot;permanentCity&quot;:&quot;All&quot;},&quot;msgId&quot;:&quot;1748244381184|en_IN&quot;,&quot;plainAccessRequest&quot;:{}}}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP HeaderManager" enabled="true">
+              <collectionProp name="HeaderManager.headers">
+                <elementProp name="accept" elementType="Header">
+                  <stringProp name="Header.name">accept</stringProp>
+                  <stringProp name="Header.value">application/json, text/plain, */*</stringProp>
+                </elementProp>
+                <elementProp name="accept-language" elementType="Header">
+                  <stringProp name="Header.name">accept-language</stringProp>
+                  <stringProp name="Header.value">en-GB,en-US;q=0.9,en;q=0.8</stringProp>
+                </elementProp>
+                <elementProp name="content-type" elementType="Header">
+                  <stringProp name="Header.name">content-type</stringProp>
+                  <stringProp name="Header.value">application/json;charset=UTF-8</stringProp>
+                </elementProp>
+                <elementProp name="origin" elementType="Header">
+                  <stringProp name="Header.name">origin</stringProp>
+                  <stringProp name="Header.value">https://saura-emitra-uat.selcofoundation.org</stringProp>
+                </elementProp>
+                <elementProp name="priority" elementType="Header">
+                  <stringProp name="Header.name">priority</stringProp>
+                  <stringProp name="Header.value">u=1, i</stringProp>
+                </elementProp>
+                <elementProp name="referer" elementType="Header">
+                  <stringProp name="Header.name">referer</stringProp>
+                  <stringProp name="Header.value">https://saura-emitra-uat.selcofoundation.org/digit-ui/employee/im/complaint/details/KA-RCH-123-1083/pg.dummy</stringProp>
+                </elementProp>
+                <elementProp name="sec-ch-ua" elementType="Header">
+                  <stringProp name="Header.name">sec-ch-ua</stringProp>
+                  <stringProp name="Header.value">&quot;Chromium&quot;;v=&quot;134&quot;, &quot;Not:A-Brand&quot;;v=&quot;24&quot;, &quot;Google Chrome&quot;;v=&quot;134&quot;</stringProp>
+                </elementProp>
+                <elementProp name="sec-ch-ua-mobile" elementType="Header">
+                  <stringProp name="Header.name">sec-ch-ua-mobile</stringProp>
+                  <stringProp name="Header.value">?0</stringProp>
+                </elementProp>
+                <elementProp name="sec-ch-ua-platform" elementType="Header">
+                  <stringProp name="Header.name">sec-ch-ua-platform</stringProp>
+                  <stringProp name="Header.value">&quot;Linux&quot;</stringProp>
+                </elementProp>
+                <elementProp name="sec-fetch-dest" elementType="Header">
+                  <stringProp name="Header.name">sec-fetch-dest</stringProp>
+                  <stringProp name="Header.value">empty</stringProp>
+                </elementProp>
+                <elementProp name="sec-fetch-mode" elementType="Header">
+                  <stringProp name="Header.name">sec-fetch-mode</stringProp>
+                  <stringProp name="Header.value">cors</stringProp>
+                </elementProp>
+                <elementProp name="sec-fetch-site" elementType="Header">
+                  <stringProp name="Header.name">sec-fetch-site</stringProp>
+                  <stringProp name="Header.value">same-origin</stringProp>
+                </elementProp>
+                <elementProp name="user-agent" elementType="Header">
+                  <stringProp name="Header.name">user-agent</stringProp>
+                  <stringProp name="Header.value">Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36</stringProp>
+                </elementProp>
+              </collectionProp>
+              <stringProp name="TestPlan.comments">Created from cURL on 2025-05-26T12:56:41.036268</stringProp>
+            </HeaderManager>
+            <hashTree/>
+          </hashTree>
+        </hashTree>
+        <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="MDMS Search"/>
+        <hashTree>
+          <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="JSR223 PreProcessor">
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="script">def filePath = &quot;/home/bhcp0174/Downloads/searchAPI.csv&quot;
+def lines = new File(filePath).readLines()
+// Skip the first line (header)
+def dataLines = lines.drop(1)
+// Pick a random line from the data (excluding header)
+def randomValue = dataLines[new Random().nextInt(dataLines.size())]
+vars.put(&quot;tenantId&quot;, randomValue)</stringProp>
+          </JSR223PreProcessor>
+          <hashTree/>
+          <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV Data Set Config">
+            <stringProp name="filename">/home/bhcp0174/Downloads/mdmsdata.csv</stringProp>
+            <stringProp name="fileEncoding"></stringProp>
+            <stringProp name="variableNames">tenantId</stringProp>
+            <boolProp name="ignoreFirstLine">true</boolProp>
+            <stringProp name="delimiter">,</stringProp>
+            <boolProp name="quotedData">false</boolProp>
+            <boolProp name="recycle">true</boolProp>
+            <boolProp name="stopThread">false</boolProp>
+            <stringProp name="shareMode">shareMode.all</stringProp>
+          </CSVDataSet>
+          <hashTree/>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Auth token">
+            <stringProp name="TestPlan.comments">Created from cURL on 2025-05-20T17:15:15.578138</stringProp>
+            <stringProp name="HTTPSampler.domain">saura-emitra-uat.selcofoundation.org</stringProp>
+            <stringProp name="HTTPSampler.protocol">https</stringProp>
+            <stringProp name="HTTPSampler.path">/user/oauth/token?_=1747741503582</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">username=7346864311&amp;password=Health%402026&amp;userType=EMPLOYEE&amp;tenantId=pg&amp;scope=read&amp;grant_type=password</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP HeaderManager" enabled="true">
+              <collectionProp name="HeaderManager.headers">
+                <elementProp name="accept" elementType="Header">
+                  <stringProp name="Header.name">accept</stringProp>
+                  <stringProp name="Header.value">application/json, text/plain, */*</stringProp>
+                </elementProp>
+                <elementProp name="accept-language" elementType="Header">
+                  <stringProp name="Header.name">accept-language</stringProp>
+                  <stringProp name="Header.value">en-GB,en-US;q=0.9,en;q=0.8</stringProp>
+                </elementProp>
+                <elementProp name="authorization" elementType="Header">
+                  <stringProp name="Header.name">authorization</stringProp>
+                  <stringProp name="Header.value">Basic ZWdvdi11c2VyLWNsaWVudDo=</stringProp>
+                </elementProp>
+                <elementProp name="content-type" elementType="Header">
+                  <stringProp name="Header.name">content-type</stringProp>
+                  <stringProp name="Header.value">application/x-www-form-urlencoded</stringProp>
+                </elementProp>
+                <elementProp name="origin" elementType="Header">
+                  <stringProp name="Header.name">origin</stringProp>
+                  <stringProp name="Header.value">https://saura-emitra-uat.selcofoundation.org</stringProp>
+                </elementProp>
+                <elementProp name="priority" elementType="Header">
+                  <stringProp name="Header.name">priority</stringProp>
+                  <stringProp name="Header.value">u=1, i</stringProp>
+                </elementProp>
+                <elementProp name="referer" elementType="Header">
+                  <stringProp name="Header.name">referer</stringProp>
+                  <stringProp name="Header.value">https://saura-emitra-uat.selcofoundation.org/digit-ui/employee/user/login?from=%2Fdigit-ui%2Femployee</stringProp>
+                </elementProp>
+                <elementProp name="sec-ch-ua" elementType="Header">
+                  <stringProp name="Header.name">sec-ch-ua</stringProp>
+                  <stringProp name="Header.value">&quot;Chromium&quot;;v=&quot;134&quot;, &quot;Not:A-Brand&quot;;v=&quot;24&quot;, &quot;Google Chrome&quot;;v=&quot;134&quot;</stringProp>
+                </elementProp>
+                <elementProp name="sec-ch-ua-mobile" elementType="Header">
+                  <stringProp name="Header.name">sec-ch-ua-mobile</stringProp>
+                  <stringProp name="Header.value">?0</stringProp>
+                </elementProp>
+                <elementProp name="sec-ch-ua-platform" elementType="Header">
+                  <stringProp name="Header.name">sec-ch-ua-platform</stringProp>
+                  <stringProp name="Header.value">&quot;Linux&quot;</stringProp>
+                </elementProp>
+                <elementProp name="sec-fetch-dest" elementType="Header">
+                  <stringProp name="Header.name">sec-fetch-dest</stringProp>
+                  <stringProp name="Header.value">empty</stringProp>
+                </elementProp>
+                <elementProp name="sec-fetch-mode" elementType="Header">
+                  <stringProp name="Header.name">sec-fetch-mode</stringProp>
+                  <stringProp name="Header.value">cors</stringProp>
+                </elementProp>
+                <elementProp name="sec-fetch-site" elementType="Header">
+                  <stringProp name="Header.name">sec-fetch-site</stringProp>
+                  <stringProp name="Header.value">same-origin</stringProp>
+                </elementProp>
+                <elementProp name="user-agent" elementType="Header">
+                  <stringProp name="Header.name">user-agent</stringProp>
+                  <stringProp name="Header.value">Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36</stringProp>
+                </elementProp>
+              </collectionProp>
+              <stringProp name="TestPlan.comments">Created from cURL on 2025-05-20T17:15:15.578306</stringProp>
+            </HeaderManager>
+            <hashTree/>
+            <BoundaryExtractor guiclass="BoundaryExtractorGui" testclass="BoundaryExtractor" testname="Boundary Extractor" enabled="true">
+              <stringProp name="BoundaryExtractor.useHeaders">false</stringProp>
+              <stringProp name="BoundaryExtractor.refname">token</stringProp>
+              <stringProp name="BoundaryExtractor.lboundary">&quot;access_token&quot;:&quot;</stringProp>
+              <stringProp name="BoundaryExtractor.rboundary">&quot;,&quot;token_type</stringProp>
+              <stringProp name="BoundaryExtractor.default"></stringProp>
+              <boolProp name="BoundaryExtractor.default_empty_value">false</boolProp>
+              <stringProp name="BoundaryExtractor.match_number">1</stringProp>
+            </BoundaryExtractor>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="MDMS search">
+            <stringProp name="TestPlan.comments">Created from cURL on 2025-05-23T16:24:31.756011</stringProp>
+            <stringProp name="HTTPSampler.domain">saura-emitra-uat.selcofoundation.org</stringProp>
+            <stringProp name="HTTPSampler.protocol">https</stringProp>
+            <stringProp name="HTTPSampler.path">/egov-mdms-service/v1/_search?tenantId=</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">{&quot;MdmsCriteria&quot;:{&quot;tenantId&quot;:&quot;${tenantId}&quot;,&quot;moduleDetails&quot;:[{&quot;moduleName&quot;:&quot;commonUiConfig&quot;,&quot;masterDetails&quot;:[{&quot;name&quot;:&quot;LoginConfig&quot;}]}]},&quot;RequestInfo&quot;:{&quot;apiId&quot;:&quot;Rainmaker&quot;,&quot;msgId&quot;:&quot;1747997225554|en_IN&quot;,&quot;plainAccessRequest&quot;:{}}}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP HeaderManager" enabled="true">
+              <collectionProp name="HeaderManager.headers">
+                <elementProp name="accept" elementType="Header">
+                  <stringProp name="Header.name">accept</stringProp>
+                  <stringProp name="Header.value">application/json, text/plain, */*</stringProp>
+                </elementProp>
+                <elementProp name="accept-language" elementType="Header">
+                  <stringProp name="Header.name">accept-language</stringProp>
+                  <stringProp name="Header.value">en-GB,en-US;q=0.9,en;q=0.8</stringProp>
+                </elementProp>
+                <elementProp name="content-type" elementType="Header">
+                  <stringProp name="Header.name">content-type</stringProp>
+                  <stringProp name="Header.value">application/json;charset=UTF-8</stringProp>
+                </elementProp>
+                <elementProp name="origin" elementType="Header">
+                  <stringProp name="Header.name">origin</stringProp>
+                  <stringProp name="Header.value">https://saura-emitra-uat.selcofoundation.org</stringProp>
+                </elementProp>
+                <elementProp name="priority" elementType="Header">
+                  <stringProp name="Header.name">priority</stringProp>
+                  <stringProp name="Header.value">u=1, i</stringProp>
+                </elementProp>
+                <elementProp name="referer" elementType="Header">
+                  <stringProp name="Header.name">referer</stringProp>
+                  <stringProp name="Header.value">https://saura-emitra-uat.selcofoundation.org/odisha/employee/user/login</stringProp>
+                </elementProp>
+                <elementProp name="sec-ch-ua" elementType="Header">
+                  <stringProp name="Header.name">sec-ch-ua</stringProp>
+                  <stringProp name="Header.value">&quot;Chromium&quot;;v=&quot;134&quot;, &quot;Not:A-Brand&quot;;v=&quot;24&quot;, &quot;Google Chrome&quot;;v=&quot;134&quot;</stringProp>
+                </elementProp>
+                <elementProp name="sec-ch-ua-mobile" elementType="Header">
+                  <stringProp name="Header.name">sec-ch-ua-mobile</stringProp>
+                  <stringProp name="Header.value">?0</stringProp>
+                </elementProp>
+                <elementProp name="sec-ch-ua-platform" elementType="Header">
+                  <stringProp name="Header.name">sec-ch-ua-platform</stringProp>
+                  <stringProp name="Header.value">&quot;Linux&quot;</stringProp>
+                </elementProp>
+                <elementProp name="sec-fetch-dest" elementType="Header">
+                  <stringProp name="Header.name">sec-fetch-dest</stringProp>
+                  <stringProp name="Header.value">empty</stringProp>
+                </elementProp>
+                <elementProp name="sec-fetch-mode" elementType="Header">
+                  <stringProp name="Header.name">sec-fetch-mode</stringProp>
+                  <stringProp name="Header.value">cors</stringProp>
+                </elementProp>
+                <elementProp name="sec-fetch-site" elementType="Header">
+                  <stringProp name="Header.name">sec-fetch-site</stringProp>
+                  <stringProp name="Header.value">same-origin</stringProp>
+                </elementProp>
+                <elementProp name="user-agent" elementType="Header">
+                  <stringProp name="Header.name">user-agent</stringProp>
+                  <stringProp name="Header.value">Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36</stringProp>
+                </elementProp>
+              </collectionProp>
+              <stringProp name="TestPlan.comments">Created from cURL on 2025-05-23T16:24:31.756078</stringProp>
+            </HeaderManager>
+            <hashTree/>
+          </hashTree>
+        </hashTree>
+        <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="Multi_User_Login test"/>
+        <hashTree>
+          <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="JSR223 PreProcessor">
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="script">def filePath = &quot;/home/bhcp0174/Downloads/HCR_usercreds.csv&quot;
+def lines = new File(filePath).readLines()
+// Skip the header
+def dataLines = lines.drop(1)
+// Pick a random line
+def randomLine = dataLines[new Random().nextInt(dataLines.size())]
+// Split the line by comma
+def parts = randomLine.split(&quot;,&quot;)
+if (parts.size() &gt;= 3) {
+    vars.put(&quot;userName&quot;, parts[0].trim())
+    vars.put(&quot;password&quot;, parts[1].trim())
+    vars.put(&quot;tenantId&quot;, parts[2].trim())
+} else {
+    log.error(&quot;Invalid line format: ${randomLine}&quot;)
+}
+</stringProp>
+          </JSR223PreProcessor>
+          <hashTree/>
+          <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV Data Set Config for USercreds">
+            <stringProp name="filename">/home/bhcp0174/Downloads/HCR_usercreds.csv</stringProp>
+            <stringProp name="fileEncoding"></stringProp>
+            <stringProp name="variableNames">userName,password,tenantId,phcSubType</stringProp>
+            <boolProp name="ignoreFirstLine">true</boolProp>
+            <stringProp name="delimiter">,</stringProp>
+            <boolProp name="quotedData">false</boolProp>
+            <boolProp name="recycle">true</boolProp>
+            <boolProp name="stopThread">false</boolProp>
+            <stringProp name="shareMode">shareMode.all</stringProp>
+          </CSVDataSet>
+          <hashTree/>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Multiple user login">
+            <stringProp name="TestPlan.comments">Created from cURL on 2025-05-20T13:16:25.839016</stringProp>
+            <stringProp name="HTTPSampler.domain">saura-emitra-uat.selcofoundation.org</stringProp>
+            <stringProp name="HTTPSampler.protocol">https</stringProp>
+            <stringProp name="HTTPSampler.path">/user/oauth/token?_=1747727170395</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">username=${userName}&amp;password=${password}&amp;userType=EMPLOYEE&amp;tenantId=${tenantId}&amp;scope=read&amp;grant_type=password</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP HeaderManager" enabled="true">
+              <collectionProp name="HeaderManager.headers">
+                <elementProp name="accept" elementType="Header">
+                  <stringProp name="Header.name">accept</stringProp>
+                  <stringProp name="Header.value">application/json, text/plain, */*</stringProp>
+                </elementProp>
+                <elementProp name="accept-language" elementType="Header">
+                  <stringProp name="Header.name">accept-language</stringProp>
+                  <stringProp name="Header.value">en-GB,en-US;q=0.9,en;q=0.8</stringProp>
+                </elementProp>
+                <elementProp name="authorization" elementType="Header">
+                  <stringProp name="Header.name">authorization</stringProp>
+                  <stringProp name="Header.value">Basic ZWdvdi11c2VyLWNsaWVudDo=</stringProp>
+                </elementProp>
+                <elementProp name="content-type" elementType="Header">
+                  <stringProp name="Header.name">content-type</stringProp>
+                  <stringProp name="Header.value">application/x-www-form-urlencoded</stringProp>
+                </elementProp>
+                <elementProp name="origin" elementType="Header">
+                  <stringProp name="Header.name">origin</stringProp>
+                  <stringProp name="Header.value">https://saura-emitra-uat.selcofoundation.org</stringProp>
+                </elementProp>
+                <elementProp name="priority" elementType="Header">
+                  <stringProp name="Header.name">priority</stringProp>
+                  <stringProp name="Header.value">u=1, i</stringProp>
+                </elementProp>
+                <elementProp name="referer" elementType="Header">
+                  <stringProp name="Header.name">referer</stringProp>
+                  <stringProp name="Header.value">https://saura-emitra-uat.selcofoundation.org/digit-ui/employee/user/login</stringProp>
+                </elementProp>
+                <elementProp name="sec-ch-ua" elementType="Header">
+                  <stringProp name="Header.name">sec-ch-ua</stringProp>
+                  <stringProp name="Header.value">&quot;Chromium&quot;;v=&quot;134&quot;, &quot;Not:A-Brand&quot;;v=&quot;24&quot;, &quot;Google Chrome&quot;;v=&quot;134&quot;</stringProp>
+                </elementProp>
+                <elementProp name="sec-ch-ua-mobile" elementType="Header">
+                  <stringProp name="Header.name">sec-ch-ua-mobile</stringProp>
+                  <stringProp name="Header.value">?0</stringProp>
+                </elementProp>
+                <elementProp name="sec-ch-ua-platform" elementType="Header">
+                  <stringProp name="Header.name">sec-ch-ua-platform</stringProp>
+                  <stringProp name="Header.value">&quot;Linux&quot;</stringProp>
+                </elementProp>
+                <elementProp name="sec-fetch-dest" elementType="Header">
+                  <stringProp name="Header.name">sec-fetch-dest</stringProp>
+                  <stringProp name="Header.value">empty</stringProp>
+                </elementProp>
+                <elementProp name="sec-fetch-mode" elementType="Header">
+                  <stringProp name="Header.name">sec-fetch-mode</stringProp>
+                  <stringProp name="Header.value">cors</stringProp>
+                </elementProp>
+                <elementProp name="sec-fetch-site" elementType="Header">
+                  <stringProp name="Header.name">sec-fetch-site</stringProp>
+                  <stringProp name="Header.value">same-origin</stringProp>
+                </elementProp>
+                <elementProp name="user-agent" elementType="Header">
+                  <stringProp name="Header.name">user-agent</stringProp>
+                  <stringProp name="Header.value">Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36</stringProp>
+                </elementProp>
+              </collectionProp>
+              <stringProp name="TestPlan.comments">Created from cURL on 2025-05-20T13:16:25.839555</stringProp>
+            </HeaderManager>
+            <hashTree/>
+            <BoundaryExtractor guiclass="BoundaryExtractorGui" testclass="BoundaryExtractor" testname="Boundary Extractor" enabled="true">
+              <stringProp name="BoundaryExtractor.useHeaders">false</stringProp>
+              <stringProp name="BoundaryExtractor.refname">token</stringProp>
+              <stringProp name="BoundaryExtractor.lboundary">&quot;access_token&quot;:&quot;</stringProp>
+              <stringProp name="BoundaryExtractor.rboundary">&quot;,&quot;token_type</stringProp>
+              <stringProp name="BoundaryExtractor.default"></stringProp>
+              <boolProp name="BoundaryExtractor.default_empty_value">false</boolProp>
+              <stringProp name="BoundaryExtractor.match_number">1</stringProp>
+            </BoundaryExtractor>
+            <hashTree/>
+          </hashTree>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Workflow Search">
+          <stringProp name="TestPlan.comments">Created from cURL on 2025-05-23T16:53:14.881914</stringProp>
+          <stringProp name="HTTPSampler.domain">saura-emitra-uat.selcofoundation.org</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">/egov-workflow-v2/egov-wf/businessservice/_search?tenantId=pg&amp;businessServices=Incident</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;RequestInfo&quot;:{&quot;apiId&quot;:&quot;Rainmaker&quot;,&quot;authToken&quot;:&quot;${token}&quot;,&quot;msgId&quot;:&quot;1747999365631|en_IN&quot;,&quot;plainAccessRequest&quot;:{},&quot;businessServices&quot;: &quot;Incident&quot;}}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP HeaderManager" enabled="true">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="accept" elementType="Header">
+                <stringProp name="Header.name">accept</stringProp>
+                <stringProp name="Header.value">application/json, text/plain, */*</stringProp>
+              </elementProp>
+              <elementProp name="accept-language" elementType="Header">
+                <stringProp name="Header.name">accept-language</stringProp>
+                <stringProp name="Header.value">en-GB,en-US;q=0.9,en;q=0.8</stringProp>
+              </elementProp>
+              <elementProp name="content-type" elementType="Header">
+                <stringProp name="Header.name">content-type</stringProp>
+                <stringProp name="Header.value">application/json;charset=UTF-8</stringProp>
+              </elementProp>
+              <elementProp name="origin" elementType="Header">
+                <stringProp name="Header.name">origin</stringProp>
+                <stringProp name="Header.value">https://saura-emitra-uat.selcofoundation.org</stringProp>
+              </elementProp>
+              <elementProp name="priority" elementType="Header">
+                <stringProp name="Header.name">priority</stringProp>
+                <stringProp name="Header.value">u=1, i</stringProp>
+              </elementProp>
+              <elementProp name="referer" elementType="Header">
+                <stringProp name="Header.name">referer</stringProp>
+                <stringProp name="Header.value">https://saura-emitra-uat.selcofoundation.org/digit-ui/employee/im/inbox</stringProp>
+              </elementProp>
+              <elementProp name="sec-ch-ua" elementType="Header">
+                <stringProp name="Header.name">sec-ch-ua</stringProp>
+                <stringProp name="Header.value">&quot;Chromium&quot;;v=&quot;134&quot;, &quot;Not:A-Brand&quot;;v=&quot;24&quot;, &quot;Google Chrome&quot;;v=&quot;134&quot;</stringProp>
+              </elementProp>
+              <elementProp name="sec-ch-ua-mobile" elementType="Header">
+                <stringProp name="Header.name">sec-ch-ua-mobile</stringProp>
+                <stringProp name="Header.value">?0</stringProp>
+              </elementProp>
+              <elementProp name="sec-ch-ua-platform" elementType="Header">
+                <stringProp name="Header.name">sec-ch-ua-platform</stringProp>
+                <stringProp name="Header.value">&quot;Linux&quot;</stringProp>
+              </elementProp>
+              <elementProp name="sec-fetch-dest" elementType="Header">
+                <stringProp name="Header.name">sec-fetch-dest</stringProp>
+                <stringProp name="Header.value">empty</stringProp>
+              </elementProp>
+              <elementProp name="sec-fetch-mode" elementType="Header">
+                <stringProp name="Header.name">sec-fetch-mode</stringProp>
+                <stringProp name="Header.value">cors</stringProp>
+              </elementProp>
+              <elementProp name="sec-fetch-site" elementType="Header">
+                <stringProp name="Header.name">sec-fetch-site</stringProp>
+                <stringProp name="Header.value">same-origin</stringProp>
+              </elementProp>
+              <elementProp name="user-agent" elementType="Header">
+                <stringProp name="Header.name">user-agent</stringProp>
+                <stringProp name="Header.value">Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36</stringProp>
+              </elementProp>
+            </collectionProp>
+            <stringProp name="TestPlan.comments">Created from cURL on 2025-05-23T16:53:14.881971</stringProp>
+          </HeaderManager>
+          <hashTree/>
+        </hashTree>
+        <ResultCollector guiclass="StatVisualizer" testclass="ResultCollector" testname="Aggregate Report">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>true</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <sentBytes>true</sentBytes>
+              <url>true</url>
+              <threadCounts>true</threadCounts>
+              <idleTime>true</idleTime>
+              <connectTime>true</connectTime>
+            </value>
+          </objProp>
+          <stringProp name="filename"></stringProp>
+        </ResultCollector>
+        <hashTree/>
+        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>true</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <sentBytes>true</sentBytes>
+              <url>true</url>
+              <threadCounts>true</threadCounts>
+              <idleTime>true</idleTime>
+              <connectTime>true</connectTime>
+            </value>
+          </objProp>
+          <stringProp name="filename"></stringProp>
+        </ResultCollector>
+        <hashTree/>
+      </hashTree>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>
