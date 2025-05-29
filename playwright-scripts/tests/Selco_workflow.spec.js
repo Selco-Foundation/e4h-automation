@@ -31,6 +31,7 @@ test("loginpagetest", async ({ page }) => {
 
   await CRMpage.CRM_Login(users.CRM.username, users.CRM.password, users.CRM.center);
   await CRMpage.isTextPresentCRM("Tickets");
+  await CRMpage.SLADAYSReamaining();
   await CRMpage.SearchticketCRM();
   let Ticketnumber1= await CRMpage.CRM_Ticket_Creation("Raichur","Raichur","Chandrabanda Primary Health Centre","Battery","Acid Leakage","test comment");
   await CRMpage.CRM_ticket_Rejection(Ticketnumber1);

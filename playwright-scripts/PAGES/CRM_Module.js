@@ -48,6 +48,9 @@ constructor(page){
     this.logoutbutton=page.locator("(//*[name()='svg'])[3]");
     this.logoutOption=page.locator("//span[contains(text(),'Logout')]")
     this.logoutconfirm= page.locator("//button[@class='selector-button-primary']")
+    this.NearingSLAoption=page.locator("(//span[normalize-space()='Nearing SLA'])[1]")
+    this.nearingSLAvalue=page.locator("(//span[@class='sla-cell-success'][normalize-space()='3'])[1]");
+
     }
 
 async CRM_Login(username1,password1,Healthcarecenter1)
@@ -71,6 +74,25 @@ async isTextPresentCRM(expectedText)
          await expect(locator).toHaveText(expectedText)
     
     }
+
+
+async SLADAYSReamaining()
+    {
+        await this.NearingSLAoption.click();
+        await this.page.waitForSelector("(//th[normalize-space()='SLA Days Remaining'])[1]")
+        const SLAdaysTEXT= await this.nearingSLAvalue.textContent();
+        const SLAdayscount= parseInt(SLAdaysTEXT.trim(),10);
+        
+        if(!isNaN(SLAdayscount) &&SLAdayscount<=3)
+        {
+             console.log("SLA is displaying correctly")
+        }
+        else
+        {
+            console.log("SLA day count is incorrect")
+        }
+        await this.Backbutton.click();    
+}    
     
     
 async SearchticketCRM()
