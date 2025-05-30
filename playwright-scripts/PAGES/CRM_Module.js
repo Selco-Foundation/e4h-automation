@@ -120,6 +120,7 @@ async SearchticketCRM()
     await this.finalAssignButton.click();
     const successtoast= await this.successtoastmessage;
     await expect(successtoast).toBeVisible();
+    await this.page.screenshot({path: 'Screenshot/Assigned.png'})
      }
     
     
