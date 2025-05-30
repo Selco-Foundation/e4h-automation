@@ -49,8 +49,11 @@ constructor(page){
     this.logoutOption=page.locator("//span[contains(text(),'Logout')]")
     this.logoutconfirm= page.locator("//button[@class='selector-button-primary']")
     this.NearingSLAoption=page.locator("(//span[normalize-space()='Nearing SLA'])[1]")
-    this.nearingSLAvalue=page.locator("(//span[@class='sla-cell-success'][normalize-space()='3'])[1]");
-
+    this.nearingSLAvalue=page.locator("//tbody/tr[1]/td[7]/span[1]");
+    this .TickettypeFilter=page.locator("(//input[@type='text'])[1]");
+    this.tickettypetablecontent=page.locator("(//span[contains(text(),'Array junction box')])[2]");
+    this.healthcarecentreFilter=page.locator("(//input[@type='text'])[2]");
+    this.healthcarenametablecontent=page.locator("(//span[contains(text(),'Chandrabanda Primary Health Centre')])[2]");
     }
 
 async CRM_Login(username1,password1,Healthcarecenter1)
@@ -93,8 +96,43 @@ async SLADAYSReamaining()
         }
         await this.Backbutton.click();    
 }    
-    
-    
+
+async FilteroptionValidation()
+{
+await this.inboxOption.click();
+//Ticket type filter validation
+await this.TickettypeFilter.click();
+await this.TickettypeFilter.fill("Array junction box");
+await this.page.getByText("Array junction box", {exact: true}).click();
+
+const TickettypeinTable= await this.tickettypetablecontent.textContent();
+if (TickettypeinTable== "Array junction box")
+{
+    console.log("Ticket type filter is working fine")
+}
+else
+{
+    console.log("Ticket type filter not working")
+}
+await this.page.waitForTimeout(2000);
+//heealth care center filter validation
+await this.healthcarecentreFilter.click();
+await this.healthcarecentreFilter.fill("Chandrabanda Primary Health Centre");
+await this.page.getByText("Chandrabanda Primary Health Centre", {exact: true}).click();
+const Healthcarenametable= await this.healthcarenametablecontent.textContent();
+if (Healthcarenametable== "Chandrabanda Primary Health Centre")
+{
+    console.log("Health care name filter is working fine")
+}
+
+else
+{
+    console.log("Health care name filter not working")
+}
+await this.page.waitForTimeout(2000);
+await this.Backbutton.click();   
+}
+
 async SearchticketCRM()
      {
     await this.inboxOption.click();
