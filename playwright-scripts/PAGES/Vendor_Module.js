@@ -30,6 +30,7 @@ this.finalsendbackbutton=page.locator("(//button[@class='selector-button-primary
 this.logoutbutton=page.locator("(//*[name()='svg'])[3]");
 this.logoutOption=page.locator("//span[contains(text(),'Logout')]")
 this.logoutconfirm= page.locator("//button[@class='selector-button-primary']")
+this.Currentownername=page.locator("//tbody/tr[1]/td[6]/span[1]");
 }
 
 async Vendor_Login(username2,password2,Healthcarecenter2)
@@ -52,6 +53,12 @@ async Resolve_Ticket()
 await this.inboxOption.click();
 const tableheadingvisible= await this.tableheading;
 await expect(tableheadingvisible).toBeVisible();
+const CurrentownernameINTable= await this.Currentownername.textContent();
+const Actualcurrentowner= "Selco India";
+if(CurrentownernameINTable==Actualcurrentowner)
+{
+    console.log("current owner is correct")
+}
 await this.Topappearedticket.click();
 const ticketstatus= this.pendingforResolutionStatus;
 await expect(ticketstatus).toBeVisible();
