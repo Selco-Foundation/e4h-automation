@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test"
 const fs = require('fs');
 const path = require('path');
-const users = require('/home/bhcp0174/Downloads/playwrightAutomationforSELCO/User.json'); 
+const users = require('//home/bhcp0174/Downloads/e4h-automation/playwright-scripts/User.json'); 
 import { LOGINPAGE } from "../PAGES/LOGINPAGE";
 
 import { HCR_FUNCTIONALITY } from "../PAGES/HCR_Module";
