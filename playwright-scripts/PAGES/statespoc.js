@@ -36,6 +36,7 @@ exports.statespoc= class statespoc {
     //  await expect(Tableheadings).toBeVisible();
 
      await this.Topappearedticketinspoc.click();
+     await this.page.waitForTimeout(2000);
      await this.TakeActionBUtton.click();
      await this.Assign.click();
 

@@ -128,7 +128,7 @@ const fileChooserPromise = this.page.waitForEvent("filechooser");
         const fileChooser = await fileChooserPromise;
         await fileChooser.setFiles(path.join("./fileUploads", "selco2.png"));
 
-await this.page.waitForTimeout(3000);
+await this.page.waitForTimeout(2000);
        
 await this.outofwarrantyBUtton.click();
 await this.page.screenshot({path: 'Screenshot/outofwarranty.png'})
