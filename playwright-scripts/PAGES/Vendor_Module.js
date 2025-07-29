@@ -37,6 +37,7 @@ this.outofwarrantyComment=page.locator("(//textarea[@name='comment'])[1]");
 this.outofwannatyUPLOAD=page.locator("(//div[contains(text(),'Upload')])[1]");
 this.outofwarrantyBUtton=page.locator("(//h2[normalize-space()='Out of Warranty'])[1]");
 this.outofwarrantypendingResolutionfilter=page.locator("//input[starts-with(@value, 'Out of Warranty - Pending with Vendor for Resolution')]");
+this.statespocresolvesucesstoast=page.locator("(//div[@class='toast-success'])[1]");
 
 
 }
@@ -148,7 +149,12 @@ const fileChooserPromise= this.page.waitForEvent("filechooser");
 await this.page.locator("(//div[contains(text(),'Upload')])[1]").click();
 const fileChooser= await fileChooserPromise;
 await fileChooser.setFiles(path.join("./fileUploads", "selco2.png"))
+await this.page.waitForTimeout(2000);
 await this.finalResolvebutton.click();
+const successtoastforspocResolve= await this.statespocresolvesucesstoast;
+await expect(successtoastforspocResolve).toBeVisible();
+console.log("Resolved")
+
 await this.page.screenshot({path: 'Screenshot/outofwarrantyResolve.png'})
 }
 
