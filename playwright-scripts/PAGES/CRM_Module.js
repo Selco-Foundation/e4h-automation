@@ -20,15 +20,15 @@ constructor(page){
     this.ticketSummary= page.locator("//header[normalize-space()='Ticket Summary'])[1]")          
     this.Takeactionbutton= page.locator("(//header[normalize-space()='Take Action'])[1]")
     this.assignform= page.locator("(//div[@class='menu-wrap'])[1]")
-    this.Assignbutton= page.locator("(//p[normalize-space()='ASSIGN'])[1]")
-    this.RejectButton=page.locator("(//p[normalize-space()='REJECT'])[1]")  
+    this.Assignbutton= page.locator("(//p[normalize-space()='Assign'])[1]")
+    this.RejectButton=page.locator("(//p[normalize-space()='Decline'])[1]")  
     this.assigndropdown=page.locator("//input[@type='text']")
     this.commentbox= page.locator("(//textarea[@name='comment'])[1]")
-    this.finalAssignButton=page.locator("(//h2[normalize-space()='ASSIGN'])[1]")
+    this.finalAssignButton=page.locator("(//h2[normalize-space()='Assign'])[1]")
     this.ticketstatus= page.locator("//p[normalize-space()='Pending Resolution']");
     this.searchedTicketresult=page.locator("//a[starts-with(normalize-space(), 'KA-RCH-')]")   
     this.succestoastforAssign= page.locator("(//div[@class='toast-success'])[1]")  
-    this.Backbutton= page.locator("(//a[normalize-space()='BACK'])[1]")
+    this.Backbutton= page.locator("(//a[normalize-space()='Back'])[1]")
     this.Newticketcreation=page.locator( "(//a[normalize-space()='New Ticket'])[1]");
     this.district=page.locator("input.employee-select-wrap--elipses.false")
     this.Block=page.locator("(//input[@type='text'])[2]")
@@ -43,18 +43,16 @@ constructor(page){
     this.Submitticket_Buttton=page.locator("(//header[normalize-space()='Submit Ticket'])[1]")
     this.rejectreasondropdown= page.locator("(//input[@type='text'])[1]")
     this.commentbox1=page.locator("(//textarea[@name='comment'])[1]")
-    this.finalrejectbutton=page.locator("(//h2[normalize-space()='REJECT'])[1]")
+    this.finalrejectbutton=page.locator("(//h2[normalize-space()='Decline'])[1]")
     this.rejectiontoastmessage=page.locator("(//div[@class='action-bar-wrap undefined'])[1]")
     this.logoutbutton=page.locator("(//*[name()='svg'])[3]");
     this.logoutOption=page.locator("//span[contains(text(),'Logout')]")
     this.logoutconfirm= page.locator("//button[@class='selector-button-primary']")
     this.NearingSLAoption=page.locator("(//span[normalize-space()='Nearing SLA'])[1]")
     this.nearingSLAvalue=page.locator("//tbody/tr[1]/td[7]/span[1]");
-    this .TickettypeFilter=page.locator("(//input[@type='text'])[1]");
-    this.tickettypetablecontent=page.locator("(//span[contains(text(),'Array junction box')])[2]");
-    this.healthcarecentreFilter=page.locator("(//input[@type='text'])[2]");
-    this.healthcarenametablecontent=page.locator("(//span[contains(text(),'Chandrabanda Primary Health Centre')])[2]");
-    }
+    this.Issolarsystemworking=page.locator("//div[@class='field']//div//div[@class='employee-select-wrap ']//input[@type='text']");
+    this.Yesoption=page.locator("//div[@id='jk-dropdown-unique']//div[contains(@class, 'cp profile-dropdown--item')][2]");
+}
 
 async CRM_Login(username1,password1,Healthcarecenter1)
     {
@@ -78,61 +76,23 @@ async isTextPresentCRM(expectedText)
     
     }
 
-
 async SLADAYSReamaining()
-    {
-        await this.NearingSLAoption.click();
-        await this.page.waitForSelector("(//th[normalize-space()='SLA Days Remaining'])[1]")
-        const SLAdaysTEXT= await this.nearingSLAvalue.textContent();
-        const SLAdayscount= parseInt(SLAdaysTEXT.trim(),10);
-        
-        if(!isNaN(SLAdayscount) &&SLAdayscount<=3)
-        {
-             console.log("SLA is displaying correctly")
-        }
-        else
-        {
-            console.log("SLA day count is incorrect")
-        }
-        await this.Backbutton.click();    
-}    
+{
 
-async FilteroptionValidation()
+await this.NearingSLAoption.click();
+await this.page.waitForSelector("(//th[normalize-space()='SLA Days Remaining'])[1]")
+const SLAdaysTEXT= await this.nearingSLAvalue.textContent();
+const SLAdayscount= parseInt(SLAdaysTEXT.trim(),10);
+if(!isNaN(SLAdayscount) &&SLAdayscount<=3)
 {
-await this.inboxOption.click();
-//Ticket type filter validation
-await this.TickettypeFilter.click();
-await this.TickettypeFilter.fill("Array junction box");
-await this.page.getByText("Array junction box", {exact: true}).click();
-
-const TickettypeinTable= await this.tickettypetablecontent.textContent();
-if (TickettypeinTable== "Array junction box")
-{
-    console.log("Ticket type filter is working fine")
+    console.log("SLA is displaying correctly")
 }
-else
-{
-    console.log("Ticket type filter not working")
+else{
+    console.log("SLA day count is incorrect")
 }
-await this.page.waitForTimeout(2000);
-//heealth care center filter validation
-await this.healthcarecentreFilter.click();
-await this.healthcarecentreFilter.fill("Chandrabanda Primary Health Centre");
-await this.page.getByText("Chandrabanda Primary Health Centre", {exact: true}).click();
-const Healthcarenametable= await this.healthcarenametablecontent.textContent();
-if (Healthcarenametable== "Chandrabanda Primary Health Centre")
-{
-    console.log("Health care name filter is working fine")
-}
-
-else
-{
-    console.log("Health care name filter not working")
-}
-await this.page.waitForTimeout(2000);
-await this.Backbutton.click();   
-}
-
+await this.Backbutton.click();
+    
+}     
 async SearchticketCRM()
      {
     await this.inboxOption.click();
@@ -152,8 +112,10 @@ async SearchticketCRM()
     await this.Assignbutton.click();
     await expect(this.page.locator("(//h1[normalize-space()='Assign Ticket'])[1]")).toBeVisible();
     await this.assigndropdown.click();
-    await this.page.keyboard.type('selcoindianew'); 
-    await this.page.getByText('selcoindianew', { exact: true }).click();
+    // await this.page.keyboard.press("ArrowDown");
+    // await this.page.keyboard.press("Enter");
+    await this.page.keyboard.type('selcoindia'); 
+    await this.page.getByText('selcoindia', { exact: true }).click();
     await this.commentbox.fill("Test Comment");
     await this.finalAssignButton.click();
     const successtoast= await this.successtoastmessage;
@@ -190,18 +152,19 @@ async CRM_Ticket_Creation(districtname, blockname, healthcarecentername, Tickett
         await this.ticket_Subtype1.click();
         await this.ticket_Subtype1.fill(TicketSUBtype_Name1);
         await this.page.getByText(TicketSUBtype_Name1, { exact: true }).click();
+
+         await this.Issolarsystemworking.click();
+         await this.Yesoption.click();
+
+
         // Comments
         await this.Comment1.fill(comments1);
 
         // Upload a file
         const fileChooserPromise = this.page.waitForEvent("filechooser");
-        await this.page.locator("input.input-mirror-selector-button").click();
+        await this.page.locator("(//div[contains(text(),'Upload')])[2]").click();
         const fileChooser = await fileChooserPromise;
-        await fileChooser.setFiles([
-            path.join("./fileUploads", "Selcoimage.png"),
-            path.join("./fileUploads", "selco2.png"),
-          ]);
-        
+        await fileChooser.setFiles(path.join("./fileUploads", "MicrosoftTeams-video111.mp4"));
         await this.Submitticket_Buttton.click();
         // Wait for ticket ID
         await this.TicketID1.waitFor({ state: 'visible', timeout: 10000 });
@@ -230,8 +193,8 @@ async CRM_ticket_Rejection(Ticketnumber1)
     await this.Takeactionbutton.click();
     await this.RejectButton.click();
     await this.rejectreasondropdown.click();
-    await this.rejectreasondropdown.fill("Others")
-    await this.page.getByText("Others", {exact:true}).click();
+    await this.rejectreasondropdown.fill("Duplication")
+    await this.page.getByText("Duplication", {exact:true}).click();
     await this.commentbox1.fill("test comment");
     await this.finalrejectbutton.click();
     const rejectiontoast= this.rejectiontoastmessage;

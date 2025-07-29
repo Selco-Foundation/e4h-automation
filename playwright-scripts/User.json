@@ -2,9 +2,9 @@
  
 {
   "HCR": {
-    "username": "selcoindia1",
+    "username": "5163828485",
     "password": "Health@2026",
-    "center":"Chandrabanda Primary Health Centre"
+    "center":"Chandrabanda PHC"
   },
   "CRM": {
     "username": "7346864311",
@@ -12,8 +12,13 @@
     "center":"All"
   },
   "vendor": {
-    "username": "selcoindianew",
+    "username": "selcoindia",
     "password": "Energy@123",
+    "center":"All"
+  },
+  "state_Spoc":{
+     "username": "state_program_manager",
+    "password": "Beehyv@123",
     "center":"All"
   }
 } 

@@ -12,9 +12,20 @@ exports.LOGINPAGE = class LOGINPAGE {
     this.forgotpasswdheading=page.locator("(//h1[normalize-space()='Need Help with Your Credentials?'])[1]")
     this.mailadress=page.locator("(//span[normalize-space()='karnatakacrm@selcofoundation.org'])[1]");
     this.oKBUTTON=page.locator("(//h2[normalize-space()='OK'])[1]");
+    this.ContinueBUtton=page.locator("//header[normalize-space()='CONTINUE']")
   }
 
 async login(username, password, centerName) {
+    await this.ContinueBUtton.click(); 
+
+    //Forgot password fnctionality
+    await this.forgotpassword.click();
+    await expect(this.forgotpasswdheading).toBeVisible();
+    const heading= await this.forgotpasswdheading.textContent();
+    console.log(heading);
+    await this.mailadress.click();
+    await this.oKBUTTON.click()
+    
     await expect(this.usernameinput).toBeVisible();
     await this.usernameinput.fill(username);
     await this.passwordinput.fill(password);
@@ -33,7 +44,7 @@ async login(username, password, centerName) {
     await this.page.keyboard.type(centerName);
     await this.page.waitForTimeout(500);
     await this.page.getByText(centerName, { exact: true }).click();
-    await this.page.waitForTimeout(2000);
+    //await this.page.waitForTimeout(2000);
     await this.loginbutton.click();
   }
 

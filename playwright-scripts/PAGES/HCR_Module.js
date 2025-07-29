@@ -29,20 +29,25 @@ exports.HCR_FUNCTIONALITY = class HCR_FUNCTIONALITY {
     this.logo=page.locator("//img[@class='bannerLogo']");
     this.resolvedticket=page.locator("(//a[contains(normalize-space(), 'KA')])[1]");
     this.takeactionbutton=page.locator("(//header[normalize-space()='Take Action'])[1]");
-    this.reopenbutton= page.locator("(//p[contains(@class,'custom-p')])[1]");
+    this.reopenbutton= page.locator("(//p[@class='custom-p'])[1]");
     this.reopenformheading=page.locator("(//h1[normalize-space()='Re-Open Ticket'])[1]");
     this.reopenReason=page.locator("(//input[@type='text'])[1]");
     this.reopencomment=page.locator("(//textarea[@name='comment'])[1]");
-    this.FinalReopenButton=page.locator("(//button[@class='selector-button-primary'])[1]");
+    this.FinalReopenButton=page.locator("(//h2[normalize-space()='Reopen'])[1]");
     this.reopensuccesstoast=page.locator("(//div[contains(@class,'toast-success')])[1]");
     this.inboxnew=page.locator("(//a[normalize-space()='Inbox'])[1]")
     this.SLAdayscount=page.locator("(//span[@class='sla-cell-success'])[1]")
+    this.Issolarsystemworking=page.locator("//div[@class='field']//div//div[@class='employee-select-wrap ']//input[@type='text']");
+    this.Yesoption=page.locator("//div[@id='jk-dropdown-unique']//div[contains(@class, 'cp profile-dropdown--item')][2]");
 
   }
 
   //Ticket creation Process
 
   async Ticket_Creation(Tickettype_Name, TicketSUBtype_Name, comments) {
+    
+    
+   
     await this.Newticketlink.click();
     //Select ticket type
     await this.Tickettype.click();
@@ -55,15 +60,16 @@ exports.HCR_FUNCTIONALITY = class HCR_FUNCTIONALITY {
     await this.page.keyboard.type(TicketSUBtype_Name);
     await this.page.waitForTimeout(500);
     await this.page.getByText(TicketSUBtype_Name, { exact: true }).click();
+
+    await this.Issolarsystemworking.click();
+    await this.Yesoption.click();
+
     await this.Comment.fill(comments);
     // Upload a file
     const fileChooserPromise = this.page.waitForEvent("filechooser");
-    await this.page.locator("input.input-mirror-selector-button").click();
+    await this.page.locator("(//div[contains(text(),'Upload')])[2]").click();
     const fileChooser = await fileChooserPromise;
-    await fileChooser.setFiles([
-      path.join("./fileUploads", "Selcoimage.png"),
-      path.join("./fileUploads", "selco2.png"),
-    ]);
+    await fileChooser.setFiles(path.join("./fileUploads", "MicrosoftTeams-video111.mp4"));
     await this.page.waitForTimeout(3000);
     await this.submitTicketButton.waitFor({ state: "visible" });
     await this.submitTicketButton.click();
@@ -73,7 +79,8 @@ exports.HCR_FUNCTIONALITY = class HCR_FUNCTIONALITY {
     return id;
   }
 
-  async Success_Confirmation(Expected_successtoast) {
+  async Success_Confirmation(Expected_successtoast) 
+  {
     const locator = this.Confirmationmessage;
     await expect(locator).toBeVisible();
   }
@@ -98,14 +105,19 @@ exports.HCR_FUNCTIONALITY = class HCR_FUNCTIONALITY {
     const SLAdays= await this.SLAdayscount.textContent();
     console.log("SLA days remaining = ", SLAdays);
     const SLAdayscountinNumber = parseInt(SLAdays.trim(), 10)
-    if (SLAdayscountinNumber !==10)
-      {
-      console.error('SLA days mismatch: Expected 10, but got ${SLAdayscountinNumber}');
+
+  if (SLAdayscountinNumber === 4) {
+  console.log("Ticket is High priority");
+} else if (SLAdayscountinNumber === 8) {
+  console.log("Ticket is Medium priority");
+} else if (SLAdayscountinNumber === 11) {
+  console.log("Ticket is Low priority");
+} 
+else {
+  console.error(`Unexpected SLA days: Got ${SLAdayscountinNumber}`);
     }
-    else{
-      console.log("SLA days is correct");
-    }
-  }
+}
+
 
 async Status_functionality()
 //Verify all the status filter and Reopoen one Resolved ticket
@@ -147,12 +159,13 @@ await this.takeactionbutton.click();
 await this.reopenbutton.click();
 await expect(this.reopenformheading).toBeVisible();
 await this.reopenReason.click();
+//const Allreason=await this.reopenReason.getByText();
 await this.reopenReason.fill(reopenreasontext);
 await this.page.getByText(reopenreasontext, {exact: true}).click();
 await this.reopencomment.fill(reopencomment);
 // Upload a file
 const fileChooserPromise = this.page.waitForEvent("filechooser");
-await this.page.locator("(//input[@class='input-mirror-selector-button'])").click();
+await this.page.locator("(//div[contains(text(),'Upload')])[1]").click();
 const fileChooser = await fileChooserPromise;
 await fileChooser.setFiles(path.join("./fileUploads", "Selcoimage.png"))
 await this.FinalReopenButton.click();
