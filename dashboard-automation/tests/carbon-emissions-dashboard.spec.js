@@ -70,13 +70,11 @@ test('Total Solar Capacity matches sum of each facility\'s latest reading', asyn
   expect(displayed).toBeCloseTo(expected, 2);
 });
 
-// This documents a real, currently-failing check: "Number of Health Centres"
-// and "Number of Solar Systems" are configured with the exact same aggregation
-// (cardinality of Data.facilityId.keyword), so they always render the same
-// number. Left failing on purpose until the "Number of Solar Systems" panel
-// is repointed at its own field.
-test('Number of Solar Systems is a distinct metric from Number of Health Centres', async ({ page }) => {
+// "Number of Health Centres" and "Number of Solar Systems" are both configured
+// as the cardinality of Data.facilityId.keyword, so the two panels are expected
+// to show the same number.
+test('Number of Solar Systems matches Number of Health Centres', async ({ page }) => {
   const healthCentres = await readMetricPanelValue(page, 'Number of Health Centres');
   const solarSystems = await readMetricPanelValue(page, 'Number of Solar Systems');
-  expect(solarSystems).not.toBe(healthCentres);
+  expect(solarSystems).toBe(healthCentres);
 });
