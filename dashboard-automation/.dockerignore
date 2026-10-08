@@ -1,0 +1,9 @@
+node_modules
+.env
+.git
+docker
+test-results
+playwright-report
+blob-report
+playwright/.cache
+playwright/.auth
