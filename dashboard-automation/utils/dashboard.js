@@ -5,10 +5,10 @@
  *   whatever time range the browser/session last had selected and any
  *   ES-side comparison query won't line up with what's on screen.
  */
-export async function openDashboard(page, baseUrl, dashboardId, { time, timeout = 30_000 } = {}) {
+export async function openDashboard(page, baseUrl, dashboardId, { time, timeout = 90_000 } = {}) {
   const globalState = time ? `?_g=(time:(from:${time.from},to:${time.to}))` : '';
   await page.goto(`${baseUrl}/app/dashboards#/view/${dashboardId}${globalState}`, {
-    waitUntil: 'networkidle',
+    waitUntil: 'domcontentloaded',
     timeout,
   });
 }
@@ -28,26 +28,42 @@ function assertNonZero(value, panelTitle) {
 }
 
 /**
- * Reads the big number off a TSVB "metric" panel by its visible title.
- * Waits for the panel's own render-complete flag first, since some panels
- * (e.g. terms+top_hits aggregations) can take several seconds longer than
- * others on first load.
+ * Shared reader for metric panels. Kibana lazy-renders panels that are off
+ * screen and Lens/TSVB re-render (detaching the value node) when data
+ * arrives, so a one-shot waitFor + innerText is flaky. Scroll the panel into
+ * view, then poll until the value element holds a parseable number.
  */
-export async function readMetricPanelValue(page, panelTitle, { timeout = 30_000 } = {}) {
+async function readPanelNumber(page, panelTitle, valueSubj, timeout) {
   const panel = page.locator('[data-test-subj="embeddablePanel"]', { hasText: panelTitle }).first();
-  await panel.locator('[data-render-complete="true"]').first().waitFor({ timeout });
-  const text = await panel.locator('[data-test-subj="tsvbMetricValue"]').first().innerText({ timeout: 5_000 });
-  return assertNonZero(parseFloat(text.replace(/,/g, '')), panelTitle);
+  const deadline = Date.now() + timeout;
+  let lastErr;
+  while (Date.now() < deadline) {
+    try {
+      await panel.scrollIntoViewIfNeeded({ timeout: 10_000 });
+      const value = panel.locator(`[data-test-subj="${valueSubj}"]`).first();
+      await value.waitFor({ timeout: 10_000 });
+      const text = await value.innerText({ timeout: 5_000 });
+      const num = parseFloat(text.replace(/,/g, ''));
+      if (!Number.isNaN(num)) return assertNonZero(num, panelTitle);
+      lastErr = new Error(`Panel "${panelTitle}" value not numeric yet: "${text}"`);
+    } catch (e) {
+      if (e.message.includes('displayed 0')) throw e;
+      lastErr = e;
+    }
+    await page.waitForTimeout(1_000);
+  }
+  throw new Error(`Panel "${panelTitle}" did not render a value within ${timeout}ms: ${lastErr?.message}`);
+}
+
+/** Reads the big number off a TSVB "metric" panel by its visible title. */
+export function readMetricPanelValue(page, panelTitle, { timeout = 90_000 } = {}) {
+  return readPanelNumber(page, panelTitle, 'tsvbMetricValue', timeout);
 }
 
 /**
- * Reads the big number off a Lens "metric" panel by its visible title.
- * Same idea as readMetricPanelValue, but Lens metric visualizations render
- * their value under data-test-subj="metric_value" instead of tsvbMetricValue.
+ * Reads the big number off a Lens "metric" panel by its visible title
+ * (Lens renders its value under data-test-subj="metric_value").
  */
-export async function readLensMetricPanelValue(page, panelTitle, { timeout = 30_000 } = {}) {
-  const panel = page.locator('[data-test-subj="embeddablePanel"]', { hasText: panelTitle }).first();
-  await panel.locator('[data-render-complete="true"]').first().waitFor({ timeout });
-  const text = await panel.locator('[data-test-subj="metric_value"]').first().innerText({ timeout: 5_000 });
-  return assertNonZero(parseFloat(text.replace(/,/g, '')), panelTitle);
+export function readLensMetricPanelValue(page, panelTitle, { timeout = 90_000 } = {}) {
+  return readPanelNumber(page, panelTitle, 'metric_value', timeout);
 }

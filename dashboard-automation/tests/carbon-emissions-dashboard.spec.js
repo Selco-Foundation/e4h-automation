@@ -43,7 +43,7 @@ test('Cumulative 20-Year Projected Emissions Avoided matches sum(actual) + sum(p
 });
 
 test('Total Solar Capacity matches sum of each facility\'s latest reading', async ({ page, request }) => {
-  const displayed = await readMetricPanelValue(page, 'Total Solar Capacity in kWp', { timeout: 45_000 });
+  const displayed = await readMetricPanelValue(page, 'Total Solar Capacity in kWp');
   const es = await kibanaEsSearch(request, BASE_URL, INDEX, {
     size: 0,
     aggs: {

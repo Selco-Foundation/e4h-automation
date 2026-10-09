@@ -6,7 +6,7 @@ export default defineConfig({
   fullyParallel: false,
   retries: process.env.CI ? 1 : 0,
   reporter: [['html', { open: 'never' }], ['list'], ['./reporters/pieChartReporter.js']],
-  timeout: 60_000,
+  timeout: 180_000,
   use: {
     baseURL: process.env.KIBANA_BASE_URL,
     trace: 'on-first-retry',
